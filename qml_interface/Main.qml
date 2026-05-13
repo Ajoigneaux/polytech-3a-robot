@@ -29,7 +29,7 @@ ApplicationWindow
         anchors.top: martyIpAddress.bottom
 
         text: "Connect to Marty"
-        onClicked: {}
+        onClicked: con.outputStr("Hello")//Appel du slot
     }
 
 }
