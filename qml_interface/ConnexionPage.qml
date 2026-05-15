@@ -1,0 +1,38 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+
+Item
+{
+    id:connexion_page
+    width: parent.width
+    height: parent.height
+
+    Column
+    {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        spacing: 15
+
+        TextField//Conserver la dernière IP entrée ?
+        {
+            id: martyIpAddress
+            width: startWindow.width/2
+
+            selectByMouse: true
+            placeholderText: "Marty IP Address"
+            validator: RegularExpressionValidator { regularExpression: /([0-9]{,3}.){3}[0-9]{,3}+/ }//Vérifier bon fonctionnement
+        }
+
+        Button
+        {
+            id: buttonConnect
+            width: martyIpAddress.width
+            height: 1.5*martyIpAddress.height
+
+            text: "Connect to Marty"
+            onClicked: con.outputStr("Hello")//Appel du slot
+        }
+    }
+
+}
