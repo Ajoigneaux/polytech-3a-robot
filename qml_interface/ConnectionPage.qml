@@ -4,7 +4,7 @@ import QtQuick.Layouts
 
 Item
 {
-    id:connexion_page
+    id:connection_page
     width: parent.width
     height: parent.height
 
@@ -21,7 +21,7 @@ Item
 
             selectByMouse: true
             placeholderText: "Marty IP Address"
-            validator: RegularExpressionValidator { regularExpression: /([0-9]{,3}.){3}[0-9]{,3}+/ }//Vérifier bon fonctionnement
+            validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}+/ }//Vérifier bon fonctionnement
         }
 
         Button
@@ -31,7 +31,7 @@ Item
             height: 1.5*martyIpAddress.height
 
             text: "Connect to Marty"
-            onClicked: con.outputStr("Hello")//Appel du slot
+            onClicked: marty_interaction.connect(martyIpAddress.text)//Appel du slot
         }
     }
 

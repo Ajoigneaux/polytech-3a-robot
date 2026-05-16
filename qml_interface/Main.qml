@@ -8,14 +8,23 @@ ApplicationWindow
     width: 640
     height: 480
     visible: true
-    title: "SapinPastel - Marty Controller"//utiliser qsTr("blablabla") si on souhaite traduction
+    title: qsTr("SapinPastel - Marty Controller")
 
     StackView
     {
         id: main_stack
-        initialItem: "ConnexionPage.qml"
+        initialItem: "ConnectionPage.qml"
 
         anchors.fill: parent
+    }
+
+    Connections
+        {
+            target: marty_interaction
+            function onConnectionToMartySuccess()
+            {
+                main_stack.push("ControlPage.qml")
+            }
     }
 
 }

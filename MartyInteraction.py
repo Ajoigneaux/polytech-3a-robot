@@ -1,11 +1,21 @@
 from martypy import Marty
-from PySide6.QtCore import QObject, Slot
+from PySide6.QtCore import QObject, Slot, Signal
 
 class MartyInteraction(QObject):
 
-    # def __init__(self, ip_address):
-    #     self.ip_address=ip_address
-    #     self.my_marty = Marty("wifi", self.ip_address)
+    connectionToMartySuccess=Signal()
+
+    def __init__(self):
+        super().__init__()
+        self.robot=None
+        self.battery=0
+
+    @Slot(str)
+    def connect(self, ip_address):
+        # self.robot=Marty("wifi", ip_address)
+        print("Connexion to Marty at " + ip_address)
+        self.connectionToMartySuccess.emit()
+        self.battery=self.getBattery()
 
     @Slot(result=int)
     def getBattery(self):
@@ -14,7 +24,6 @@ class MartyInteraction(QObject):
     
     # my_marty.dance()
     # print(my_marty.wiggle(1000))
-    print("go")
     # print(my_marty.get_battery_remaining())
     # my_marty.get_ready(True)
     # my_marty.walk(3,move_time=1000)
