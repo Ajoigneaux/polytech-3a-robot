@@ -24,7 +24,7 @@ Item
             validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}+/ }//Vérifier bon fonctionnement
         }
 
-        Button
+        Button//Touche entrée pour valider ?
         {
             id: buttonConnect
             width: martyIpAddress.width
@@ -32,6 +32,22 @@ Item
 
             text: "Connect to Marty"
             onClicked: marty_interaction.connect(martyIpAddress.text)//Appel du slot
+        }
+
+        Text
+        {
+            id: textError
+            text: ""
+            color: "red"
+        }
+
+        Connections
+        {
+            target: marty_interaction
+            function onConnectionToMartyFailed()
+            {
+                textError.text=qsTr("Error failed to connect")
+            }
         }
     }
 
