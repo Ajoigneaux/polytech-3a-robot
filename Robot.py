@@ -1,4 +1,5 @@
 class Robot:
-    score=0
-    id=""
-    ip=""
+    def __init__(self, rid : str):
+        self.rid = rid
+        self.score = 0
+        # self.ip = ""
