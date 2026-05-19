@@ -44,9 +44,10 @@ Item
         Connections
         {
             target: marty_interaction
-            function onConnectionToMartyFailed()
+            function onConnectionToMartySuccess(result)
             {
-                textError.text=qsTr("Error failed to connect")
+                if(!result)
+                    textError.text=qsTr("Error failed to connect")
             }
         }
     }

@@ -21,9 +21,10 @@ ApplicationWindow
     Connections
         {
             target: marty_interaction
-            function onConnectionToMartySuccess()
+            function onConnectionToMartySuccess(result)
             {
-                main_stack.push("ControlPage.qml")
+                if(result)
+                    main_stack.push("ControlPage.qml")
             }
     }
 
