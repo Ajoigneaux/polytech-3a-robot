@@ -4,6 +4,7 @@ from PySide6.QtCore import QObject, Slot, Signal
 class MartyInteraction(QObject):
 
     connectionToMartySuccess=Signal(bool)
+    disconnectionToMartySuccess=Signal(bool)
 
     def __init__(self):
         super().__init__()
@@ -13,13 +14,28 @@ class MartyInteraction(QObject):
     @Slot(str)
     def connect(self, ip_address):
         try:
-            self.robot=Marty("wifi", ip_address)
+            if(ip_address==""):
+                self.robot=Marty("wifi", "192.168.0.109")
+            else:
+                self.robot=Marty("wifi", ip_address)
             print("Connexion to Marty at " + ip_address)
             self.connectionToMartySuccess.emit(True)
             # self.battery=self.getBattery()
         except:
             print("Failed to connect to Marty at : " + ip_address)
             self.connectionToMartySuccess.emit(False)
+
+    @Slot()
+    def disconnect(self):
+        try:
+            print("Disconnection to Marty")
+            self.robot.close()
+            self.disconnectionToMartySuccess.emit(True)
+        except:
+            print("Disconnection to Marty failed")
+            self.disconnectionToMartySuccess.emit(False)
+
+            
 
 
     @Slot(result=int)

@@ -20,8 +20,8 @@ Item
             width: startWindow.width/2
 
             selectByMouse: true
-            placeholderText: "Marty IP Address"
-            validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}+/ }//Vérifier bon fonctionnement
+            placeholderText: qsTr("Marty IP Address")
+            validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}+/ }
         }
 
         Button//Touche entrée pour valider ?
@@ -30,7 +30,7 @@ Item
             width: martyIpAddress.width
             height: 1.5*martyIpAddress.height
 
-            text: "Connect to Marty"
+            text: qsTr("Connect to Marty")
             onClicked: marty_interaction.connect(martyIpAddress.text)//Appel du slot
         }
 

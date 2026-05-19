@@ -26,6 +26,11 @@ ApplicationWindow
                 if(result)
                     main_stack.push("ControlPage.qml")
             }
+            function onDisconnectionToMartySuccess(result)
+            {
+                if(result)
+                    main_stack.pop()
+            }
     }
 
 }

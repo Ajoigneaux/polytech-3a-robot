@@ -5,7 +5,7 @@ import QtQuick.Layouts
 Item
 {
     id:connexion_page
-    width: parent.width
+    width: parent.width//TypeError: Cannot read property 'height' of null A RESOUDRE ??
     height: parent.height
 
     Rectangle
@@ -17,5 +17,15 @@ Item
         {
             text: "Control Page"
         }
+    }
+
+    Button
+    {
+        id: closeConnection
+        height: 30
+        width: closeConnection.height
+
+        text: qsTr("X")
+        onClicked: marty_interaction.disconnect()
     }
 }
