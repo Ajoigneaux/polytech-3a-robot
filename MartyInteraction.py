@@ -1,6 +1,8 @@
 from martypy import Marty
 from PySide6.QtCore import QObject, Slot, Signal
 
+DEFAULT_IP = "192.168.0.109"
+
 class MartyInteraction(QObject):
 
     connectionToMartySuccess=Signal(bool)
@@ -15,9 +17,8 @@ class MartyInteraction(QObject):
     def connect(self, ip_address):
         try:
             if(ip_address==""):
-                self.robot=Marty("wifi", "192.168.0.109")
-            else:
-                self.robot=Marty("wifi", ip_address)
+                ip_address=DEFAULT_IP
+            self.robot=Marty("wifi", ip_address)
             print("Connexion to Marty at " + ip_address)
             self.connectionToMartySuccess.emit(True)
             # self.battery=self.getBattery()
@@ -35,14 +36,31 @@ class MartyInteraction(QObject):
             print("Disconnection to Marty failed")
             self.disconnectionToMartySuccess.emit(False)
 
-            
-
-
     @Slot(result=int)
     def getBattery(self):
         return 12#self.my_marty.get_battery_remaining()
 
-    
+    @Slot()
+    def moveUp(self):
+        print("Up")
+        pass
+
+    @Slot()
+    def moveRight(self):
+        print("Right")
+        pass
+
+    @Slot()
+    def moveDown(self):
+        print("Down")
+        pass
+
+    @Slot()
+    def moveLeft(self):
+        print("Left")
+        pass
+
+
     # my_marty.dance()
     # print(my_marty.wiggle(1000))
     # print(my_marty.get_battery_remaining())

@@ -13,6 +13,7 @@ ApplicationWindow
     StackView
     {
         id: main_stack
+        focus: true//Pour navigation clavier dans control page
         initialItem: "ConnectionPage.qml"
 
         anchors.fill: parent
