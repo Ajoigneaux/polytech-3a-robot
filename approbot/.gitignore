@@ -1,3 +1,9 @@
+# Perso
+aide.txt
+images/marty_hello.png
+qml_interface/ex.qml
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
