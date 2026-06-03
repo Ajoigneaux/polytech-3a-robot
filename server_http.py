@@ -8,7 +8,9 @@ import json
 VERSION = "1.1"
 PORT = 8080
 ADDRESS = ("", PORT)
+
 robots : dict[str,Robot] = {}
+
 battle = Battle()
 battle.load_file("test.battle")
 
