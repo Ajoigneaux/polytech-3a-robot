@@ -41,6 +41,26 @@ Item
                     font.pixelSize: 16
                     onClicked: marty_interaction.disconnect()
                 }
+                
+                Item
+                {
+                    Layout.fillWidth: true
+                }
+
+                Text
+                {
+                    id: batteryLevelText
+                    text: "..%"
+                }
+                Connections
+                {
+                    target: marty_interaction
+                        function onBatteryLevelChanged(value)
+                        {
+                            
+                            batteryLevelText.text=value+"%"
+                        }
+                }
             }
         }
 
