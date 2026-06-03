@@ -1,16 +1,16 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Robot import Robot
-from load_battle import *
+from Battle import Battle
 from urllib.parse import urlparse,parse_qs
 import uuid
 import json
 
-version = 1.1
-port = 8080
-address = ("", port)
+VERSION = "1.1"
+PORT = 8080
+ADDRESS = ("", PORT)
 robots : dict[str,Robot] = {}
-battle_rules = {}  # clé  : couleur | valeur : liste de règles
-nb_moves = 10
+battle = Battle()
+battle.load_file("test.battle")
 
 class MyHandler(BaseHTTPRequestHandler):
     
@@ -81,7 +81,7 @@ class MyHandler(BaseHTTPRequestHandler):
         print(f"REQUETE RECUE : {path}")
 
         if path == "/":
-            self.send_json({"version" : version})
+            self.send_json({"version" : VERSION})
 
         elif path == "/score" :
             params = self.get_query_params()
@@ -107,14 +107,14 @@ class MyHandler(BaseHTTPRequestHandler):
             self.send_json({"rid" : rid})
 
         elif path == "/start":
-            data = self._read_body()
+            data = self.read_body()
             rid = data.get("rid")
             if not rid or rid not in robots:
-                self._send_json({"error": "Robot inconnu"}, 404)
+                self.send_json({"error": "Robot inconnu"}, 404)
                 return
             robots[rid].reset()
-            print(f"[START] {rid} démarre — {nb_moves} mouvements autorisés")
-            self._send_json({"moves": nb_moves})
+            print(f"[START] {rid} démarre — {battle.nb_moves} mouvements autorisés")
+            self.send_json({"moves": battle.nb_moves})
 
         elif path == "/step":
             data = self.read_body()
@@ -127,7 +127,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.send_json({"error": "Robot inconnu"}, 404)
                 return
  
-            pts = calcul_step_score(col, arm, exp)
+            pts = battle.calcul_step_score(col, arm, exp)
             robots[rid].add_step(col, arm, exp, pts)
             print(f"[STEP]  {rid} | col={col} arm={arm} exp={exp} -> +{pts} pts "
                   f"(total={robots[rid].score})")
@@ -146,6 +146,3 @@ class MyHandler(BaseHTTPRequestHandler):
             self.send_json({"error": "Methode POST inconnue"}, 404)
 
     
-if __name__ == "__main__":
-    server = HTTPServer(address, MyHandler)
-    server.serve_forever()
