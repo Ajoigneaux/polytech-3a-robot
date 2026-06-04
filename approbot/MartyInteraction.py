@@ -89,18 +89,3 @@ class MartyInteraction(QObject):
 
     # print("test")
     # my_marty.close()
-
-    # import requests
-
-    # r = requests.get("http://192.168.0.105/")
-    # print(r.status_code)
-    # print(r.text)
-
-
-    # r = requests.get("http://192.168.0.105/")
-    # print(r.status_code)
-    # print(r.text)
-
-    # p = requests.post("http://192.168.0.105/hello")
-    # print(p.status_code)
-    # print(p.content)

@@ -26,7 +26,7 @@ Item
 
         Button//Touche entrée pour valider ?
         {
-            id: buttonConnect
+            id: buttonConnectMarty
             width: martyIpAddress.width
             height: 1.5*martyIpAddress.height
 
@@ -49,6 +49,26 @@ Item
                 if(!result)
                     textError.text=qsTr("Error failed to connect")
             }
+        }
+
+        TextField//Conserver la dernière IP entrée ?
+        {
+            id: serverIpAddress
+            width: startWindow.width/2
+
+            selectByMouse: true
+            placeholderText: qsTr("Server IP Address")
+            validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}+/ }
+        }
+
+        Button//Touche entrée pour valider ?
+        {
+            id: buttonConnectServer
+            width: serverIpAddress.width
+            height: 1.5*serverIpAddress.height
+
+            text: qsTr("Connect to server referee")
+            onClicked: client_server.checkServer(serverIpAddress.text)//Appel du slot
         }
     }
 
