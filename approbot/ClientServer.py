@@ -6,7 +6,7 @@ class ClientServer(QObject):
         super().__init__()
         self.port = port
         self.url = ""
-        self.robot_id= None
+        self.rid= None
 
     @Slot(str)
     def checkServer(self, ip_server):
@@ -14,12 +14,17 @@ class ClientServer(QObject):
         print(f"{self.url}")
         try:
             r = requests.get(f"{self.url}/")
-            return r.status_code == 200
+            if(r.status_code == 200):
+                self.hello()
+                print(f"{self.rid}")
+                
         except requests.ConnectionError:
-            return False
-        
+            print("connection failed")
+
     def hello(self):
         r = requests.post(f"{self.url}/hello")
         self.rid = r.json()["rid"]
-        return self.rid
+
+        
+    
     

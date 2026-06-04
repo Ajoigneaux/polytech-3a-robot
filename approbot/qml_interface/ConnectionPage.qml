@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Controls.Basic
+
 
 Item
 {
@@ -14,7 +16,7 @@ Item
         anchors.verticalCenter: parent.verticalCenter
         spacing: 15
 
-        TextField//Conserver la dernière IP entrée ?
+        TextField
         {
             id: martyIpAddress
             width: startWindow.width/2
@@ -24,7 +26,7 @@ Item
             validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}+/ }
         }
 
-        Button//Touche entrée pour valider ?
+        Button
         {
             id: buttonConnectMarty
             width: martyIpAddress.width
@@ -32,6 +34,25 @@ Item
 
             text: qsTr("Connect to Marty")
             onClicked: marty_interaction.connect(martyIpAddress.text)//Appel du slot
+
+            contentItem: Text {
+                text: buttonConnectMarty.text
+                font: buttonConnectMarty.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonConnectMarty.down ? "#17a81a" : "#21be2b"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 40
+                opacity: enabled ? 1 : 0.3
+                border.color: buttonConnectMarty.down ? "#17a81a" : "#21be2b"
+                border.width: 1
+                radius: 2
+            }
         }
 
         Text
@@ -51,7 +72,7 @@ Item
             }
         }
 
-        TextField//Conserver la dernière IP entrée ?
+        TextField
         {
             id: serverIpAddress
             width: startWindow.width/2
@@ -61,7 +82,7 @@ Item
             validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}+/ }
         }
 
-        Button//Touche entrée pour valider ?
+        Button
         {
             id: buttonConnectServer
             width: serverIpAddress.width
@@ -69,7 +90,26 @@ Item
 
             text: qsTr("Connect to server referee")
             onClicked: client_server.checkServer(serverIpAddress.text)//Appel du slot
+
+            contentItem: Text {
+                text: buttonConnectServer.text
+                font: buttonConnectServer.font
+                opacity: enabled ? 1.0 : 0.3
+                color: buttonConnectServer.down ? "#17a81a" : "#21be2b"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 40
+                opacity: enabled ? 1 : 0.3
+                border.color: buttonConnectServer.down ? "#17a81a" : "#21be2b"
+                border.width: 1
+                radius: 2
+            }
+
         }
     }
-
 }
