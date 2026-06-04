@@ -68,62 +68,138 @@ Item
         // Item { Layout.fillHeight: true }
 
         // Control commands
-        ColumnLayout
+        RowLayout
         {
-            Layout.alignment: Qt.AlignLeft
-            spacing: 10
-
-            Button
+            ColumnLayout
             {
-                id: moveUp
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 50
-                Layout.preferredWidth: 50
-                text: qsTr("↑")
-                font.pixelSize: 14
-                font.bold: true
-                onClicked: marty_interaction.moveUp()
-            }
-
-            RowLayout
-            {
+                Layout.alignment: Qt.AlignLeft
                 spacing: 10
 
                 Button
                 {
-                    id: moveLeft
+                    id: moveUp
+                    Layout.alignment: Qt.AlignHCenter
                     Layout.preferredHeight: 50
                     Layout.preferredWidth: 50
-                    text: qsTr("←")
+                    text: qsTr("↑")
                     font.pixelSize: 14
                     font.bold: true
-                    onClicked: marty_interaction.moveLeft()
+                    onClicked: marty_interaction.moveUp()
                 }
 
-                Item { Layout.preferredWidth: 50 } // Space
+                RowLayout
+                {
+                    spacing: 10
+
+                    Button
+                    {
+                        id: moveLeft
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        text: qsTr("←")
+                        font.pixelSize: 14
+                        font.bold: true
+                        onClicked: marty_interaction.moveLeft()
+                    }
+
+                    Item { Layout.preferredWidth: 50 } // Space
+
+                    Button
+                    {
+                        id: moveRight
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        text: qsTr("→")
+                        font.pixelSize: 14
+                        font.bold: true
+                        onClicked: marty_interaction.moveRight()
+                    }
+                }
 
                 Button
                 {
-                    id: moveRight
+                    id: moveDown
+                    Layout.alignment: Qt.AlignHCenter
                     Layout.preferredHeight: 50
                     Layout.preferredWidth: 50
-                    text: qsTr("→")
+                    text: qsTr("↓")
                     font.pixelSize: 14
                     font.bold: true
-                    onClicked: marty_interaction.moveRight()
+                    onClicked: marty_interaction.moveDown()
                 }
             }
-
-            Button
+ 
+            //BRAS
+            ColumnLayout
             {
-                id: moveDown
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 50
-                Layout.preferredWidth: 50
-                text: qsTr("↓")
-                font.pixelSize: 14
-                font.bold: true
-                onClicked: marty_interaction.moveDown()
+                Layout.alignment: Qt.AlignLeft
+                spacing: 10
+
+                RowLayout
+                {
+                    Button
+                    {
+                        id: leftArmForward
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        text: qsTr("L↑")
+                        font.pixelSize: 14
+                        font.bold: true
+                        onClicked: marty_interaction.leftArmForward()
+                    }
+
+                    Button
+                    {
+                        id: rightArmForward
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        text: qsTr("R↑")
+                        font.pixelSize: 14
+                        font.bold: true
+                        onClicked: marty_interaction.rightArmForward()
+                    }
+                }
+                
+                Item { Layout.preferredWidth: 50 } // Space
+
+                RowLayout
+                {
+                    Button
+                    {
+                        id: leftArmBack
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        text: qsTr("L↓")
+                        font.pixelSize: 14
+                        font.bold: true
+                        onClicked: marty_interaction.leftArmBack()
+                    }
+
+                    Button
+                    {
+                        id: rightArmBack
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        text: qsTr("R↓")
+                        font.pixelSize: 14
+                        font.bold: true
+                        onClicked: marty_interaction.rightArmBack()
+                    }
+
+                    Button
+                    {
+                        id: resetArms
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.preferredHeight: 50
+                        Layout.preferredWidth: 50
+                        text: qsTr("RESET")
+                        font.pixelSize: 14
+                        font.bold: true
+                        onClicked: marty_interaction.resetArms()
+                    }
+                }    
             }
         }
     }
