@@ -1,7 +1,7 @@
 from martypy import Marty
 from PySide6.QtCore import QObject, Slot, Signal, QTimer
 
-DEFAULT_IP = "192.168.0.101"
+DEFAULT_IP = "192.168.1.2"
 
 class MartyInteraction(QObject):
 
@@ -18,6 +18,8 @@ class MartyInteraction(QObject):
         self.timer_battery.setInterval(5000)  #Every 5 seconds
         self.timer_battery.timeout.connect(self.updateBattery)
         #Start timer after robot connection
+        self.prec_angle_right_arm=0
+        self.prec_angle_left_arm=0
 
     @Slot(str)
     def connect(self, ip_address):
@@ -76,6 +78,29 @@ class MartyInteraction(QObject):
         print("Left")
         self.robot.sidestep(side="left", steps=1, step_length=35, move_time=1000, blocking=False)
 
+    @Slot()
+    def rightArmForward(self):
+        self.prec_angle_right_arm=100
+        self.robot.arms(left_angle=self.prec_angle_left_arm, right_angle=100, move_time=500, blocking=False)
+
+    @Slot()
+    def leftArmForward(self):
+        self.prec_angle_left_arm=100
+        self.robot.arms(left_angle=100, right_angle=self.prec_angle_right_arm, move_time=500, blocking=False)
+
+    @Slot()
+    def rightArmBack(self):
+        self.prec_angle_right_arm=-100
+        self.robot.arms(left_angle=self.prec_angle_left_arm, right_angle=-100, move_time=500, blocking=False)
+
+    @Slot()
+    def leftArmBack(self):
+        self.prec_angle_left_arm=-100
+        self.robot.arms(left_angle=-100, right_angle=self.prec_angle_right_arm, move_time=500, blocking=False)
+
+    @Slot()
+    def resetArms(self):
+        self.robot.arms(left_angle=0, right_angle=0, move_time=500, blocking=False)
 
     # my_marty.dance()
     # print(my_marty.wiggle(1000))
