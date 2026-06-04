@@ -1,7 +1,7 @@
 from martypy import Marty
 from PySide6.QtCore import QObject, Slot, Signal, QTimer
 
-DEFAULT_IP = "192.168.0.109"
+DEFAULT_IP = "192.168.0.101"
 
 class MartyInteraction(QObject):
 
@@ -30,7 +30,6 @@ class MartyInteraction(QObject):
             #Battery update and start timer
             self.timer_battery.start()
             self.updateBattery()
-            self.batteryLevelChanged.emit(True)
         except:
             print("Failed to connect to Marty at : " + ip_address)
             self.connectionToMartySuccess.emit(False)
@@ -49,7 +48,7 @@ class MartyInteraction(QObject):
     @Slot(result=int)
     def updateBattery(self):
         try:
-            new_level = self.robot.get_battery_remaining()
+            new_level = int(self.robot.get_battery_remaining())
             if(new_level!=self.battery):
                 print(new_level)
                 self.battery = new_level
@@ -60,22 +59,22 @@ class MartyInteraction(QObject):
     @Slot()
     def moveUp(self):
         print("Up")
-        pass
+        self.robot.walk(num_steps=1, step_length=25, move_time=1500,blocking=False)
 
     @Slot()
     def moveRight(self):
         print("Right")
-        pass
+        self.robot.sidestep(side="right", steps=1, step_length=35, move_time=1000, blocking=False)
 
     @Slot()
     def moveDown(self):
         print("Down")
-        pass
+        self.robot.walk(num_steps=1, step_length=-25, move_time=1500,blocking=0)
 
     @Slot()
     def moveLeft(self):
         print("Left")
-        pass
+        self.robot.sidestep(side="left", steps=1, step_length=35, move_time=1000, blocking=False)
 
 
     # my_marty.dance()
