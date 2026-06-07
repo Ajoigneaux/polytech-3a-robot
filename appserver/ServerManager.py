@@ -2,7 +2,7 @@ import json
 from urllib.parse import parse_qs, urlparse
 import uuid
 
-from PySide6.QtCore import QObject, Signal, Slot
+from PySide6.QtCore import QObject, QUrl, Signal, Slot
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Robot import Robot
 from Battle import Battle
@@ -51,7 +51,8 @@ class ServerManager(QObject):
 
     @Slot(str)
     def load_battle(self, filepath):
-        self.battle.load_file(filepath)
+        clean_path = QUrl(filepath).toLocalFile()
+        self.battle.load_file(clean_path)
         self.logMessage.emit(f"[BATTLE] Fichier chargé : {filepath}")
 
     def make_handler(self):
@@ -181,6 +182,7 @@ class ServerManager(QObject):
                     pts = manager.battle.calcul_step_score(col, arm, exp)
                     manager.robots[rid].add_step(col, arm, exp, pts)
                     manager.logMessage.emit(f"[STEP] {rid} | col={col} arm={arm} exp={exp} -> +{pts} pts")
+                    manager.stepReceived.emit(rid, col, arm, exp, pts)
                     self.send_json({"points": pts})
 
                 elif path == "/bye":
