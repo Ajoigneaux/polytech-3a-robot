@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
+import QtQuick.Dialogs
 
 ApplicationWindow
 {
@@ -89,6 +90,37 @@ ApplicationWindow
                     verticalAlignment: Text.AlignVCenter
                 }
             }
+
+            Item { Layout.fillWidth: true }
+
+            Button
+            {
+                text: "Charger .battle"
+                onClicked: fileDialog.open()
+
+                background: Rectangle
+                {
+                    color: parent.down ? "#005BB5" : parent.hovered ? "#1E90FF" : "#0078D7"
+                    radius: 3
+                }
+
+                contentItem: Text
+                {
+                    text: parent.text
+                    color: "white"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            FileDialog
+            {
+                id: fileDialog
+                title: "Choisir un fichier .battle"
+                nameFilters: ["Fichiers battle (*.battle)"]
+                onAccepted: server_manager.load_battle(selectedFile)
+            }
+
         }
 
         RowLayout
