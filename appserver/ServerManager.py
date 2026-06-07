@@ -40,3 +40,8 @@ class ServerManager(QObject):
         self.server = None
         self.thread = None
         self.logMessage.emit("Serveur arrêté")
+
+    @Slot(str)
+    def load_battle(self, filepath):
+        self.battle.load_file(filepath)
+        self.logMessage.emit(f"[BATTLE] Fichier chargé : {filepath}")
