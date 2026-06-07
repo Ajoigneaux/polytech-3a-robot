@@ -39,6 +39,17 @@ ApplicationWindow
                 }
             }
         }
+        function onStepReceived(rid, col, arm, exp, points)
+        {
+            for(var i = 0; i < robotModel.count; i++)
+            {
+                if(robotModel.get(i).rid === rid)
+                {
+                    robotModel.setProperty(i, "score", robotModel.get(i).score + points)
+                    break
+                }
+            }
+        }
     }
 
     ColumnLayout
