@@ -31,7 +31,7 @@ Item
             height: 1.5*martyIpAddress.height
 
             text: qsTr("Connect to Marty")
-            onClicked: marty_interaction.connect(martyIpAddress.text)//Appel du slot
+            onClicked: marty_manager.connect(martyIpAddress.text)//Appel du slot
         }
 
         Text
@@ -43,7 +43,7 @@ Item
 
         Connections
         {
-            target: marty_interaction
+            target: marty_manager
             function onConnectionToMartySuccess(result)
             {
                 if(!result)

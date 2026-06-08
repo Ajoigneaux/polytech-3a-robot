@@ -20,24 +20,27 @@ ApplicationWindow
     }
 
     Connections
+    {
+        target: marty_manager
+        function onConnectionToMartySuccess(result)
         {
-            target: marty_interaction
-            function onConnectionToMartySuccess(result)
-            {
-                if(result)
-                    main_stack.push("ControlPage.qml")
-            }
-            function onDisconnectionToMartySuccess(result)
-            {
-                if(result)
-                    main_stack.pop()
-            }
+            if(result)
+                main_stack.push("ControlPage.qml")
+        }
+        function onDisconnectionToMartySuccess(result)
+        {
+            if(result)
+                main_stack.pop()
+        }
+    }
 
-             function onCalibrationColorPage(result)
-            {
-                    main_stack.push("ColorCalibration.qml")
-            }
-
+    Connections
+    {
+        target: marty_calibration
+        function onCalibrationColorPage(result)
+        {
+                main_stack.push("ColorCalibration.qml")
+        }
     }
 
 

@@ -28,7 +28,7 @@ Item
                 
 
                 text: "Calibration"
-                onClicked: marty_interaction.callCalibrationfunction(colorStandingOn.text)//Appel du slot
+                onClicked: marty_calibration.calibrationColors(colorStandingOn.text)//Appel du slot
             }
 
         Button
@@ -39,7 +39,7 @@ Item
                 
 
                 text: "Lecture"
-                onClicked: marty_interaction.callWhatIsThiColorFunction()//Appel du slot
+                onClicked: marty_calibration.whatIsThisColor()//Appel du slot
             }
     }
 }

@@ -39,7 +39,7 @@ Item
                     Layout.preferredWidth: 30
                     text: qsTr("✕")
                     font.pixelSize: 16
-                    onClicked: marty_interaction.disconnect()
+                    onClicked: marty_manager.disconnect()
                 }
                 
                 Button
@@ -49,7 +49,7 @@ Item
                     height: 1.5*100
 
                     text: "Calibration Couleur"
-                    onClicked: marty_interaction.calibrationColorPageSlot()//Appel du slot
+                    onClicked: marty_calibration.calibrationColorPageSlot()//Appel du slot
                 }
                 
                 Item
@@ -64,7 +64,7 @@ Item
                 }
                 Connections
                 {
-                    target: marty_interaction
+                    target: marty_manager
                         function onBatteryLevelChanged(value)
                         {
                             

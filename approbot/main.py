@@ -3,31 +3,26 @@ import sys
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
-#Signal et slot pour interactions
-from PySide6.QtCore import QObject, Slot
-
-class Console(QObject):
-    @Slot(str)
-    def outputStr(self, s):
-        print(s)
-
-con=Console()
-#Fin signal et slot
-
+from MartyManager import MartyManager
 from MartyInteraction import MartyInteraction
 from MartyCalibration import MartyCalibration
 
+from PySide6.QtQuickControls2 import QQuickStyle
+
 if __name__ == "__main__":
+    QQuickStyle.setStyle("FluentWinUI3")
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
     engine.addImportPath(sys.path[0])
-    engine.rootContext().setContextProperty("con", con)#Connexion du signal
-
     
-    marty_interaction = MartyInteraction()
+    marty_manager = MartyManager()
+    engine.rootContext().setContextProperty("marty_manager", marty_manager)
+
+    marty_interaction = MartyInteraction(marty_manager.robot)
     engine.rootContext().setContextProperty("marty_interaction", marty_interaction)
 
-    # engine.rootContext().setContextProperty("marty_calibration", marty_calibration)
+    marty_calibration = MartyCalibration(marty_manager.robot)
+    engine.rootContext().setContextProperty("marty_calibration", marty_calibration)
 
     # engine.loadFromModule("home_interface", "Main")
     engine.load("approbot/qml_interface/Main.qml")#Syntaxe plus légère pour le moment, mais pas de modularité

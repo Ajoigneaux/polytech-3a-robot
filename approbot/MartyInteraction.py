@@ -1,79 +1,19 @@
 from martypy import Marty
-from PySide6.QtCore import QObject, Slot, Signal, QTimer
+from PySide6.QtCore import QObject, Slot, Signal
 from MartyCalibration import MartyCalibration
 
 DEFAULT_IP = "192.168.1.2"
 
 class MartyInteraction(QObject):
 
-    connectionToMartySuccess=Signal(bool)
-    disconnectionToMartySuccess=Signal(bool)
-    batteryLevelChanged=Signal(int)
     calibrationColorPage=Signal()
-    marty_calibration = ""
 
-    def __init__(self):
+    def __init__(self, robot_):
         super().__init__()
-        self.robot=None
-        self.battery=0
-        #Timer for battery
-        self.timer_battery = QTimer(self)
-        self.timer_battery.setInterval(5000)  #Every 5 seconds
-        self.timer_battery.timeout.connect(self.updateBattery)
-        #Start timer after robot connection
+        self.robot=robot_
+
         self.prec_angle_right_arm=0
         self.prec_angle_left_arm=0
-
-    @Slot(str)
-    def connect(self, ip_address):
-        try:
-            if(ip_address==""):
-                ip_address=DEFAULT_IP
-            self.robot=Marty("wifi", ip_address)
-            print("Connexion to Marty at " + ip_address)
-            self.connectionToMartySuccess.emit(True)
-            #Battery update and start timer
-            self.timer_battery.start()
-            self.updateBattery()
-            self.marty_calibration = MartyCalibration(self.robot)
-        except:
-            print("Failed to connect to Marty at : " + ip_address)
-            self.connectionToMartySuccess.emit(False)
-
-    @Slot()
-    def disconnect(self):
-        try:
-            print("Disconnection to Marty")
-            self.robot.close()
-            self.disconnectionToMartySuccess.emit(True)
-            self.timer_battery.stop();
-        except:
-            print("Disconnection to Marty failed")
-            self.disconnectionToMartySuccess.emit(False)
-
-    @Slot(result=int)
-    def updateBattery(self):
-        try:
-            new_level = int(self.robot.get_battery_remaining())
-            if(new_level!=self.battery):
-                print(new_level)
-                self.battery = new_level
-                self.batteryLevelChanged.emit(new_level)
-        except:
-            print("Error on fetch battery level")
-
-
-    @Slot(str)
-    def callCalibrationfunction(self, color):
-        self.marty_calibration.calibrationColors(color)
-
-    @Slot()
-    def callWhatIsThiColorFunction(self):
-        self.marty_calibration.whatIsThisColor()
-
-    @Slot()
-    def calibrationColorPageSlot(self):
-        self.calibrationColorPage.emit()
 
     @Slot()
     def moveUp(self):
