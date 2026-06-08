@@ -1,6 +1,7 @@
 from martypy import Marty
 from PySide6.QtCore import QObject, Slot, Signal
 
+
 class MartyCalibration(QObject) :
 
     colors = []

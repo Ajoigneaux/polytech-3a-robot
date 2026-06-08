@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # engine.rootContext().setContextProperty("marty_calibration", marty_calibration)
 
     # engine.loadFromModule("home_interface", "Main")
-    engine.load("qml_interface/Main.qml")#Syntaxe plus légère pour le moment, mais pas de modularité
+    engine.load("approbot/qml_interface/Main.qml")#Syntaxe plus légère pour le moment, mais pas de modularité
 
     if not engine.rootObjects():
         sys.exit(-1)
