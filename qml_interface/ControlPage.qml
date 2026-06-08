@@ -5,7 +5,7 @@ import QtQuick.Layouts
 Item
 {
     id:connexion_page
-    width: parent.width//TypeError: Cannot read property 'height' of null A RESOUDRE ??
+    width: parent.width
     height: parent.height
 
     Rectangle
@@ -18,7 +18,16 @@ Item
             text: "Control Page"
         }
     }
+    Button
+    {
+        id: color_calibration_page_button
+        width: 100
+        height: 1.5*100
 
+        text: "Calibration Couleur"
+        onClicked: marty_interaction.calibrationColorPageSlot()//Appel du slot
+    }
+    
     Button
     {
         id: closeConnection

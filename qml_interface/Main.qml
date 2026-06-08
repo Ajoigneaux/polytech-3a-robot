@@ -31,6 +31,13 @@ ApplicationWindow
                 if(result)
                     main_stack.pop()
             }
+
+             function onCalibrationColorPage(result)
+            {
+                    main_stack.push("ColorCalibration.qml")
+            }
+
     }
+
 
 }

@@ -15,6 +15,7 @@ con=Console()
 #Fin signal et slot
 
 from MartyInteraction import MartyInteraction
+from MartyCalibration import MartyCalibration
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
@@ -22,8 +23,12 @@ if __name__ == "__main__":
     engine.addImportPath(sys.path[0])
     engine.rootContext().setContextProperty("con", con)#Connexion du signal
 
+    
     marty_interaction = MartyInteraction()
     engine.rootContext().setContextProperty("marty_interaction", marty_interaction)
+
+    # engine.rootContext().setContextProperty("marty_calibration", marty_calibration)
+
     # engine.loadFromModule("home_interface", "Main")
     engine.load("qml_interface/Main.qml")#Syntaxe plus légère pour le moment, mais pas de modularité
 
