@@ -1,6 +1,9 @@
 from PySide6.QtCore import QObject, Slot, Signal, QTimer
 
 class MartyReadDance(QObject):
+
+    moveUpRequested = Signal(int)
+
     def __init__(self):
         super().__init__()
         self.dance_file_path=""
@@ -37,7 +40,7 @@ class MartyReadDance(QObject):
             seq_len=len(self.instruction_seq)
             steps, mov=self.instruction_seq[i%seq_len]
             #Execute movement
-            self.executeMovement(mov, steps)
+            self.executeMovement(mov, int(steps))
             #Check color sensor
             # color_detected=???
             #Perform action associated
@@ -48,7 +51,8 @@ class MartyReadDance(QObject):
     def executeMovement(self, mov, steps):
         match mov:
             case "U":
-                #emit(steps, Direction ?)
+                self.moveUpRequested.emit(steps)
+                #emit(steps)?
                 #Log ?
                 pass
             case "R":

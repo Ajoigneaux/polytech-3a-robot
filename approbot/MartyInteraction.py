@@ -15,22 +15,22 @@ class MartyInteraction(QObject):
         self.prec_angle_right_arm=0
         self.prec_angle_left_arm=0
 
-    @Slot()
+    @Slot(int)
     def moveUp(self, steps=1):
         print("Up")
         self.robot.walk(num_steps=steps, step_length=25, move_time=1500,blocking=False)
 
-    @Slot()
+    @Slot(int)
     def moveRight(self, steps=1):
         print("Right")
         self.robot.sidestep(side="right", steps=steps, step_length=35, move_time=1000, blocking=False)
 
-    @Slot()
+    @Slot(int)
     def moveDown(self, steps=1):
         print("Down")
         self.robot.walk(num_steps=steps, step_length=-25, move_time=1500,blocking=0)
 
-    @Slot()
+    @Slot(int)
     def moveLeft(self, steps=1):
         print("Left")
         self.robot.sidestep(side="left", steps=steps, step_length=35, move_time=1000, blocking=False)
