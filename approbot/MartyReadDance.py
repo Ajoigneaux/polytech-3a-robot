@@ -7,9 +7,11 @@ class MartyReadDance(QObject):
         self.instruction_seq=[]#[[nbr_step, step], ...]
         self.instruction_act={}#{'Color char': [action1, action2,...]}
 
+    @Slot(str)
     def setDanceFile(self, file_path):
         self.dance_file_path=file_path
         #clean_path = QUrl(filepath).toLocalFile()
+        self.readDanceFile()
 
     def readDanceFile(self):
         f = open(self.dance_file_path)
@@ -27,21 +29,27 @@ class MartyReadDance(QObject):
         for act in act_list:
             splited_act=act.split(' ')
             self.instruction_act[splited_act[0]]=splited_act[1:]
-        print(self.instruction_act)
 
-    def startSequency(self, steps_number):#A BESOIN DU MODE BLOQUANT DES ACTIONS
+    @Slot(int)
+    def startSequency(self, steps_number):#A BESOIN DU MODE BLOQUANT DES ACTIONS ?
         for i in range(steps_number):
-            pass
             #Get movements
+            seq_len=len(self.instruction_seq)
+            steps, mov=self.instruction_seq[i%seq_len]
             #Execute movement
+            self.executeMovement(mov, steps)
             #Check color sensor
+            # color_detected=???
             #Perform action associated
+            # self.executeAction(color_detected)
+            #MartyInteraction emit when finished actions ?
             #Send summary to server
 
     def executeMovement(self, mov, steps):
         match mov:
             case "U":
                 #emit(steps, Direction ?)
+                #Log ?
                 pass
             case "R":
                 pass
@@ -49,3 +57,35 @@ class MartyReadDance(QObject):
                 pass
             case "L":
                 pass
+    
+    def executeAction(self, color_letter):#ex: color_letter="A"
+        if color_letter in self.instruction_act:
+            for act in self.instruction_act[color_letter]:
+                self.decodeAction(act)
+
+    def decodeAction(self, action):
+        #Actions
+        if action[0]=="A":
+            match action[1:]:
+                case "LU":
+                    pass
+                case "RU":
+                    pass
+                case "LB":
+                    pass
+                case "RB":
+                    pass
+        #Expressions
+        if action[0]=="X":
+            match action[1:]:
+                case "NT":
+                    pass
+                case "SD":
+                    pass
+                case "NG":
+                    print("hungry detected")
+                    pass
+                case "HP":
+                    pass
+                case "DN":
+                    pass
