@@ -28,3 +28,24 @@ class MartyReadDance(QObject):
             splited_act=act.split(' ')
             self.instruction_act[splited_act[0]]=splited_act[1:]
         print(self.instruction_act)
+
+    def startSequency(self, steps_number):#A BESOIN DU MODE BLOQUANT DES ACTIONS
+        for i in range(steps_number):
+            pass
+            #Get movements
+            #Execute movement
+            #Check color sensor
+            #Perform action associated
+            #Send summary to server
+
+    def executeMovement(self, mov, steps):
+        match mov:
+            case "U":
+                #emit(steps, Direction ?)
+                pass
+            case "R":
+                pass
+            case "B":
+                pass
+            case "L":
+                pass
