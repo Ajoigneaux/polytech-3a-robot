@@ -5,7 +5,7 @@ from PySide6.QtCore import QObject, Slot, Signal
 class MartyCalibration(QObject) :
 
     calibrationColorPage=Signal()
-    colors = []
+    colors = {}
     currentColor = ""
     robot = None
 
@@ -21,7 +21,8 @@ class MartyCalibration(QObject) :
     def calibrationColors(self, color):
         colorRead = self.robot.get_color_sensor_hex(self.robot, "left")
         colorHexa = "0x" + colorRead
-        self.colors.append([color, colorHexa])
+        self.colors[color] = colorHexa
+
 
     @Slot()
     def whatIsThisColor(self):
