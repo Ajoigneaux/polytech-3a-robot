@@ -13,6 +13,7 @@ Item
 
         ComboBox 
             {
+                id: colorStandingOn
                 width: 200
                 model: [ "Noir", "Mauve", "Bleu foncé", "Jaune", "Bleu ciel", "Vert", "Rouge" ]
             }
@@ -25,7 +26,7 @@ Item
                 
 
                 text: "Calibration"
-                onClicked: marty_calibration.calibrationColors(colorStandingOn.text)//Appel du slot
+                onClicked: marty_calibration.calibrationColors(colorStandingOn.currentText)//Appel du slot
             }
 
         Button
