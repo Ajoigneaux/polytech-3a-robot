@@ -11,13 +11,10 @@ Item
     RowLayout
     {
 
-        TextField
+        ComboBox 
             {
-                id: colorStandingOn
-                width: startWindow.width/4
-
-                selectByMouse: true
-                placeholderText: qsTr("What is this color ?")
+                width: 200
+                model: [ "Noir", "Mauve", "Bleu foncé", "Jaune", "Bleu ciel", "Vert", "Rouge" ]
             }
 
         Button
