@@ -11,13 +11,11 @@ Item
     RowLayout
     {
 
-        TextField
+        ComboBox 
             {
                 id: colorStandingOn
-                width: startWindow.width/4
-
-                selectByMouse: true
-                placeholderText: qsTr("What is this color ?")
+                width: 200
+                model: [ "Noir", "Mauve", "Bleu foncé", "Jaune", "Bleu ciel", "Vert", "Rouge" ]
             }
 
         Button
@@ -28,7 +26,7 @@ Item
                 
 
                 text: "Calibration"
-                onClicked: marty_calibration.calibrationColors(colorStandingOn.text)//Appel du slot
+                onClicked: marty_calibration.calibrationColors(colorStandingOn.currentText)//Appel du slot
             }
 
         Button
