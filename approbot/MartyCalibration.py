@@ -13,10 +13,6 @@ class MartyCalibration(QObject) :
         super().__init__()
         self.robot = robot
 
-    @Slot()
-    def calibrationColorPageSlot(self):
-        self.calibrationColorPage.emit()
-
     @Slot(str)
     def calibrationColors(self, color):
         colorRead = self.robot.get_color_sensor_hex(self.robot, "left")

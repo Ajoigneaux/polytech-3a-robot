@@ -44,8 +44,8 @@ Item {
             }
 
             Button {
-                text: qsTr("Calibration")
-                onClicked: marty_calibration.calibrationColorPageSlot()
+                text: qsTr("Calibration couleurs")
+                onClicked: main_stack.push("ColorCalibration.qml")
             }
 
             RowLayout {

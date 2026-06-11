@@ -66,15 +66,4 @@ ApplicationWindow
     //         }
     //     }
     // }
-
-    Connections
-    {
-        target: marty_calibration
-        function onCalibrationColorPage(result)
-        {
-                main_stack.push("ColorCalibration.qml")
-        }
-    }
-
-
 }
