@@ -79,7 +79,7 @@ Item {
 
                     Button {
                         id: read_color
-                        text: qsTr("LECTURE")
+                        text: qsTr("LIRE LE CAPTEUR")
                         Layout.fillWidth: true
                         Layout.preferredHeight: 50
                         onClicked: marty_calibration.whatIsThisColor()
