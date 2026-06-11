@@ -10,13 +10,13 @@ ApplicationWindow
     visible: true
     title: qsTr("SapinPastel - Marty Controller")
 
-    property bool isMartyConnected: false
-    property bool isRefereeConnected: false
-    property bool expectingReferee: false
+    property bool is_marty_connected: false
+    property bool is_referee_connected: false
+    property bool expecting_referee: false
 
     function checkNavigation()
     {
-        if (isMartyConnected && (!expectingReferee || isRefereeConnected)) {// On change de page si le robot est connecté et qu'on attend pas d'arbitre ou il est connecté aussi
+        if (is_marty_connected && (!expecting_referee || is_referee_connected)) {// On change de page si le robot est connecté et qu'on attend pas d'arbitre ou il est connecté aussi
             
             // Sécurité pour éviter d'empiler la page plusieurs fois si les deux signaux arrivent en même temps
             if (main_stack.depth === 1) {
@@ -39,14 +39,14 @@ ApplicationWindow
         target: marty_manager
         function onConnectionToMartySuccess(result)
         {
-            startWindow.isMartyConnected = result
+            startWindow.is_marty_connected = result
             if(result)
                 startWindow.checkNavigation()
         }
         function onDisconnectionToMartySuccess(result)
         {
-            startWindow.isMartyConnected = !result
-            startWindow.isRefereeConnected = !result
+            startWindow.is_marty_connected = !result
+            startWindow.is_referee_connected = !result
             if(result) {
                 main_stack.pop()
             }
@@ -60,7 +60,7 @@ ApplicationWindow
 
     //     function onConnectionToRefereeSuccess(result)
     //     {
-    //         startWindow.isRefereeConnected = result
+    //         startWindow.is_referee_connected = result
     //         if(result) {
     //             startWindow.checkNavigation()
     //         }

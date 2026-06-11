@@ -36,6 +36,7 @@ Item {
             selectByMouse: true
             placeholderText: qsTr("ex: 192.168.0.12")
             validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}/ }
+            Keys.onEnterPressed:  buttonConnect.clicked()
         }
 
         Item { Layout.preferredHeight: 20 }
@@ -53,6 +54,7 @@ Item {
             selectByMouse: true
             placeholderText: qsTr("ex: 127.0.0.1")
             validator: RegularExpressionValidator { regularExpression: /([0-9]{1,3}\.){3}[0-9]{1,3}/ }
+            Keys.onEnterPressed:  buttonConnect.clicked()
         }
 
         Item { Layout.preferredHeight: 20 }
@@ -71,7 +73,7 @@ Item {
 
                 // Connexion au robot prioritaire
                 if (martyIpAddress.text !== "") {
-                    startWindow.expectingReferee = (refereeIpAddress.text !== "")// On dit a Main.qml qu'aucun arbitre n'est attendu
+                    startWindow.expecting_referee = (refereeIpAddress.text !== "")// On dit a Main.qml qu'aucun arbitre n'est attendu
                     marty_manager.connect(martyIpAddress.text)
                 } else {
                     textError.text = qsTr("Veuillez renseigner l'IP du robot.")
