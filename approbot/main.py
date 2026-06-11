@@ -16,6 +16,14 @@ def connectSignals():
     marty_read_dance.moveBackRequested.connect(marty_interaction.moveDown)
     marty_read_dance.moveLeftRequested.connect(marty_interaction.moveLeft)
 
+    marty_read_dance.eyesExpressionRequested.connect(marty_interaction.eyesExpression)
+    marty_read_dance.eyesColorRequested.connect(marty_interaction.eyesColor)
+
+    marty_read_dance.rightArmForwardRequested.connect(marty_interaction.rightArmForward)
+    marty_read_dance.leftArmForwardRequested.connect(marty_interaction.leftArmForward)
+    marty_read_dance.rightArmBackRequested.connect(marty_interaction.rightArmBack)
+    marty_read_dance.leftArmBackRequested.connect(marty_interaction.leftArmBack)
+
 if __name__ == "__main__":
     QQuickStyle.setStyle("FluentWinUI3")
     app = QGuiApplication(sys.argv)

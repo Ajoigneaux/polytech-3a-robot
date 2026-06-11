@@ -2,10 +2,20 @@ from PySide6.QtCore import QObject, Slot, Signal, QTimer
 
 class MartyReadDance(QObject):
 
+    #Movements signals
     moveUpRequested = Signal(int)
     moveRightRequested = Signal(int)
     moveBackRequested = Signal(int)
     moveLeftRequested = Signal(int)
+    #Eyes signals
+    eyesExpressionRequested = Signal(str)
+    eyesColorRequested = Signal(str)
+    #Arms positions
+    rightArmForwardRequested = Signal()
+    leftArmForwardRequested = Signal()
+    rightArmBackRequested = Signal()
+    leftArmBackRequested = Signal()
+    resetArmsRequested = Signal()
 
     def __init__(self):
         super().__init__()
@@ -73,24 +83,28 @@ class MartyReadDance(QObject):
         if action[0]=="A":
             match action[1:]:
                 case "LU":
-                    pass
+                    self.leftArmForwardRequested.emit()
                 case "RU":
-                    pass
+                    self.rightArmForwardRequested.emit()
                 case "LB":
-                    pass
+                    self.leftArmBackRequested.emit()
                 case "RB":
-                    pass
+                    self.rightArmBackRequested.emit()
         #Expressions
         if action[0]=="X":
             match action[1:]:
                 case "NT":
-                    pass
+                    self.eyesColorRequested.emit("#000000")
+                    self.eyesExpressionRequested.emit("normal")
                 case "SD":
-                    pass
+                    self.eyesColorRequested.emit("blue")
+                    self.eyesExpressionRequested.emit("wide")
                 case "NG":
-                    print("hungry detected")
-                    pass
+                    self.eyesColorRequested.emit("red")
+                    self.eyesExpressionRequested.emit("angry")
                 case "HP":
-                    pass
+                    self.eyesColorRequested.emit("green")
+                    self.eyesExpressionRequested.emit("excited")
                 case "DN":
-                    pass
+                    self.eyesExpressionRequested.emit("wiggle")
+                    #YEUX ARC EN CIEL

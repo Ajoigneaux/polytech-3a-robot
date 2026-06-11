@@ -64,7 +64,7 @@ class MartyInteraction(QObject):
         self.robot.eyes(pose_or_angle=expr, move_time=500, blocking=False)
 
     @Slot(str)
-    def eyesColor(self, color_needed):#white, red, blue, yellow, green, teal, pink, purple, orange
+    def eyesColor(self, color_needed):#white, red, blue, yellow, green, teal, pink, purple, orange or hex value
         self.disco_color(color=color_needed, region='all')
 
     # print("test")
