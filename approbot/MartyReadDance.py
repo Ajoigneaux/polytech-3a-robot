@@ -44,7 +44,7 @@ class MartyReadDance(QObject):
             steps, mov=self.instruction_seq[i%seq_len]
             #Execute movement
             self.executeMovement(mov, int(steps))
-            #Check color sensor
+            #Check color sensor -> While marty.is_moving() ?
             # color_detected=???
             #Perform action associated
             # self.executeAction(color_detected)

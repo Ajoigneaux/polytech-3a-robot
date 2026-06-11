@@ -16,22 +16,22 @@ class MartyInteraction(QObject):
         self.prec_angle_left_arm=0
 
     @Slot(int)
-    def moveUp(self, steps=1):
+    def moveUp(self, steps):
         print("Up")
         self.robot.walk(num_steps=steps, step_length=25, move_time=1500,blocking=False)
 
     @Slot(int)
-    def moveRight(self, steps=1):
+    def moveRight(self, steps):
         print("Right")
         self.robot.sidestep(side="right", steps=steps, step_length=35, move_time=1000, blocking=False)
 
     @Slot(int)
-    def moveDown(self, steps=1):
+    def moveDown(self, steps):
         print("Down")
         self.robot.walk(num_steps=steps, step_length=-25, move_time=1500,blocking=0)
 
     @Slot(int)
-    def moveLeft(self, steps=1):
+    def moveLeft(self, steps):
         print("Left")
         self.robot.sidestep(side="left", steps=steps, step_length=35, move_time=1000, blocking=False)
 
@@ -59,14 +59,13 @@ class MartyInteraction(QObject):
     def resetArms(self):
         self.robot.arms(left_angle=0, right_angle=0, move_time=500, blocking=False)
 
-    # my_marty.dance()
-    # print(my_marty.wiggle(1000))
-    # print(my_marty.get_battery_remaining())
-    # my_marty.get_ready(True)
-    # my_marty.walk(3,move_time=1000)
-    # my_marty.send_file()
-    # my_marty.get
+    @Slot(str)
+    def eyesExpression(self, expr):#'angry', 'excited', 'normal', 'wide', or 'wiggle' 
+        self.robot.eyes(pose_or_angle=expr, move_time=500, blocking=False)
 
+    @Slot(str)
+    def eyesColor(self, color_needed):#white, red, blue, yellow, green, teal, pink, purple, orange
+        self.disco_color(color=color_needed, region='all')
 
     # print("test")
     # my_marty.close()
