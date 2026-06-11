@@ -9,10 +9,10 @@ Item
     height: parent.height
 
     //Necessite focus: true sur parent pour fonctionner sans focus de bouton par ex
-    Keys.onUpPressed: marty_interaction.moveUp()
-    Keys.onLeftPressed: marty_interaction.moveLeft()
-    Keys.onRightPressed: marty_interaction.moveRight()
-    Keys.onDownPressed: marty_interaction.moveDown()
+    Keys.onUpPressed: marty_interaction.moveUp(1)
+    Keys.onLeftPressed: marty_interaction.moveLeft(1)
+    Keys.onRightPressed: marty_interaction.moveRight(1)
+    Keys.onDownPressed: marty_interaction.moveDown(1)
 
     ColumnLayout
     {
@@ -94,7 +94,7 @@ Item
                     text: qsTr("↑")
                     font.pixelSize: 14
                     font.bold: true
-                    onClicked: marty_interaction.moveUp()
+                    onClicked: marty_interaction.moveUp(1)
                 }
 
                 RowLayout
@@ -109,7 +109,7 @@ Item
                         text: qsTr("←")
                         font.pixelSize: 14
                         font.bold: true
-                        onClicked: marty_interaction.moveLeft()
+                        onClicked: marty_interaction.moveLeft(1)
                     }
 
                     Item { Layout.preferredWidth: 50 } // Space
@@ -122,7 +122,7 @@ Item
                         text: qsTr("→")
                         font.pixelSize: 14
                         font.bold: true
-                        onClicked: marty_interaction.moveRight()
+                        onClicked: marty_interaction.moveRight(1)
                     }
                 }
 
@@ -135,7 +135,7 @@ Item
                     text: qsTr("↓")
                     font.pixelSize: 14
                     font.bold: true
-                    onClicked: marty_interaction.moveDown()
+                    onClicked: marty_interaction.moveDown(1)
                 }
             }
  

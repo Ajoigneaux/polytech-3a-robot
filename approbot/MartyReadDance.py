@@ -3,6 +3,9 @@ from PySide6.QtCore import QObject, Slot, Signal, QTimer
 class MartyReadDance(QObject):
 
     moveUpRequested = Signal(int)
+    moveRightRequested = Signal(int)
+    moveBackRequested = Signal(int)
+    moveLeftRequested = Signal(int)
 
     def __init__(self):
         super().__init__()
@@ -52,15 +55,13 @@ class MartyReadDance(QObject):
         match mov:
             case "U":
                 self.moveUpRequested.emit(steps)
-                #emit(steps)?
                 #Log ?
-                pass
             case "R":
-                pass
+                self.moveRightRequested.emit(steps)
             case "B":
-                pass
+                self.moveBackRequested.emit(steps)
             case "L":
-                pass
+                self.moveLeftRequested.emit(steps)
     
     def executeAction(self, color_letter):#ex: color_letter="A"
         if color_letter in self.instruction_act:

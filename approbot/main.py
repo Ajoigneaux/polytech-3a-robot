@@ -12,6 +12,9 @@ from PySide6.QtQuickControls2 import QQuickStyle
 
 def connectSignals():
     marty_read_dance.moveUpRequested.connect(marty_interaction.moveUp)
+    marty_read_dance.moveRightRequested.connect(marty_interaction.moveRight)
+    marty_read_dance.moveBackRequested.connect(marty_interaction.moveDown)
+    marty_read_dance.moveLeftRequested.connect(marty_interaction.moveLeft)
 
 if __name__ == "__main__":
     QQuickStyle.setStyle("FluentWinUI3")
