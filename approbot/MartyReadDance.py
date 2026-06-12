@@ -43,6 +43,8 @@ class MartyReadDance(QObject):
         dance_file=f.read().split('\n')
         dance_file.pop(0)
         act_index=dance_file.index("ACT")
+        self.instruction_seq=[] #Reset
+        self.instruction_act={} #Reset
         self.parseSequence(dance_file[:act_index])
         self.parseAct(dance_file[act_index+1:])
 
@@ -57,6 +59,9 @@ class MartyReadDance(QObject):
 
     @Slot(int)
     def startSequency(self, steps_number):#A BESOIN DU MODE BLOQUANT DES ACTIONS ?
+        #Reset expressions
+        self.eyesExpressionRequested.emit("normal")
+        self.resetArmsRequested.emit()
         seq_len=len(self.instruction_seq)
         for i in range(steps_number):
             #Get movements
@@ -66,10 +71,8 @@ class MartyReadDance(QObject):
             #Check color sensor -> While marty.is_moving() ?
             self.whatIsThisColorSignal.emit()
             print(self.currentColor)
-            # print("TEST")
-            # color_detected=???
             #Perform action associated
-            # self.executeAction(color_detected)
+            self.executeAction(self.currentColor)
             #MartyInteraction emit when finished actions ?
             #Send summary to server
 
@@ -91,6 +94,9 @@ class MartyReadDance(QObject):
                 self.decodeAction(act)
 
     def decodeAction(self, action):
+        #Reset expressions
+        self.eyesExpressionRequested.emit("normal")
+        self.resetArmsRequested.emit()
         #Actions
         if action[0]=="A":
             match action[1:]:
@@ -109,6 +115,7 @@ class MartyReadDance(QObject):
                     self.eyesColorRequested.emit("#000000")
                     self.eyesExpressionRequested.emit("normal")
                 case "SD":
+                    print("triste")
                     self.eyesColorRequested.emit("blue")
                     self.eyesExpressionRequested.emit("wide")
                 case "NG":
