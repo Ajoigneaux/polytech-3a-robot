@@ -61,6 +61,7 @@ class MartyReadDance(QObject):
     def startSequency(self, steps_number):#A BESOIN DU MODE BLOQUANT DES ACTIONS ?
         #Reset expressions
         self.eyesExpressionRequested.emit("normal")
+        self.eyesColorRequested.emit("off")
         self.resetArmsRequested.emit()
         seq_len=len(self.instruction_seq)
         for i in range(steps_number):
@@ -89,14 +90,15 @@ class MartyReadDance(QObject):
                 self.moveLeftRequested.emit(steps)
     
     def executeAction(self, color_letter):#ex: color_letter="A"
+        #Reset expressions
+        self.eyesExpressionRequested.emit("normal")
+        self.eyesColorRequested.emit("off")
+        self.resetArmsRequested.emit()
         if color_letter in self.instruction_act:
             for act in self.instruction_act[color_letter]:
                 self.decodeAction(act)
 
     def decodeAction(self, action):
-        #Reset expressions
-        self.eyesExpressionRequested.emit("normal")
-        self.resetArmsRequested.emit()
         #Actions
         if action[0]=="A":
             match action[1:]:
@@ -126,4 +128,4 @@ class MartyReadDance(QObject):
                     self.eyesExpressionRequested.emit("excited")
                 case "DN":
                     self.eyesExpressionRequested.emit("wiggle")
-                    #YEUX ARC EN CIEL
+                    self.eyesColorRequested.emit("rainbow")
