@@ -10,7 +10,7 @@ ApplicationWindow
     width: 800
     height: 600
     visible: true
-    title: "Serveur Arbitre"
+    title: qsTr("Serveur Arbitre")
 
     property bool serverRunning: false
 
@@ -57,57 +57,67 @@ ApplicationWindow
     {
         anchors.fill: parent
         anchors.margins: 10
-        spacing: 10
+        spacing: 15
 
         RowLayout
         {
             // Bouton STOP/START
             Layout.fillWidth: true
+            //spacing : 15
 
-            Text
+            Label
             {
-                text: serverRunning ? "Serveur : ON" : "Serveur : OFF"
-                color: serverRunning ? "green" : "red"
+                text: "Serveur Arbitre"
+                font.pixelSize: 20
                 font.bold: true
+                Layout.fillWidth: true
+            }
+
+            Label
+            {
+                text: serverRunning ? "● ON" : "● OFF"
+                color: serverRunning ? "#43a047" : "#e53935"
+                font.bold: true
+                font.pixelSize: 14
             }
 
             Button
             {
                 text: serverRunning ? "Arrêter" : "Démarrer"
+                highlighted: !serverRunning
                 onClicked: serverRunning ? server_manager.stop() : server_manager.start()
+            }
 
+            Item { Layout.preferredWidth: 10 }
+            
+        
+            // Switch localhost
+            RowLayout
+            {
+                spacing: 5
+                Label { text: qsTr("Localhost") }
+                Switch
+                {
+                    checked: false
+                    onClicked: server_manager.set_localhost(checked)
+                }
+            }
+            
+
+            Pane
+            {
+                padding: 6
                 background: Rectangle
                 {
-                    color: parent.down ? "#b22222" : parent.hovered ? "#ff6666" : "#cc0000"
-                    radius: 3
+                    color: Qt.alpha(palette.highlight, 0.1)
+                    radius: 6
+                    border.color: palette.highlight
                 }
-
-                contentItem: Text
+                Label
                 {
-                    text: parent.text
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    text: "IP : " + server_manager.get_local_ip()
+                    font.bold: true
                 }
-            }
-
-            Item { Layout.preferredWidth: 20 }
-            
-        
-            Switch 
-            {
-                text: qsTr("Localhost uniquement")
-                checked: false
-                onClicked: server_manager.set_localhost(checked)
-        
-            }
-            
-
-            Text
-            {
-                text : "IP : " + server_manager.get_local_ip()
-                color: "white"
-                font.bold: true
             }
 
             Item { Layout.fillWidth: true }
@@ -115,21 +125,23 @@ ApplicationWindow
             Button
             {
                 text: "Charger .battle"
+                highlighted: true
+                enabled: true
                 onClicked: fileDialog.open()
 
-                background: Rectangle
-                {
-                    color: parent.down ? "#005BB5" : parent.hovered ? "#1E90FF" : "#0078D7"
-                    radius: 3
-                }
+                // background: Rectangle
+                // {
+                //     color: parent.down ? "#005BB5" : parent.hovered ? "#1E90FF" : "#0078D7"
+                //     radius: 3
+                // }
 
-                contentItem: Text
-                {
-                    text: parent.text
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
+                // contentItem: Text
+                // {
+                //     text: parent.text
+                //     color: "white"
+                //     horizontalAlignment: Text.AlignHCenter
+                //     verticalAlignment: Text.AlignVCenter
+                // }
             }
 
             FileDialog
@@ -146,116 +158,123 @@ ApplicationWindow
         {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            spacing: 10
+            spacing: 15
 
             // Tableau des robots
-            Rectangle
+            Pane
             {
                 Layout.fillHeight: true
+                Layout.maximumWidth: 280
                 Layout.fillWidth: true
-                Layout.maximumWidth: 250
-                color: "#f5f5f5"
-                border.color: "#cccccc"
-                border.width: 1
-                radius: 3
+                
+                // color: "#f5f5f5"
+                // border.color: "#cccccc"
+                // border.width: 1
+                // radius: 3
 
-                Column
+                background: Rectangle
+                {
+                    color: Qt.alpha(palette.window, 0.5)
+                    radius: 12
+                    border.color: palette.light
+                }
+
+                ColumnLayout
                 {
                     anchors.fill: parent
-                    anchors.margins: 5
-                    spacing: 5
+                    spacing: 8
 
-                    Text
+                    Label
                     {
                         text: "Robots connectés"
                         font.bold: true
-                        color: "#222222"
+                        font.pixelSize: 14
                     }
 
-                    Row
+                    RowLayout
                     {
-                        width: parent.width
-                        spacing: 10
+                        Layout.fillWidth: true
+                        spacing: 0
 
-                        Text
-                        {
-                            text: "RID"
-                            color: "#222222"
-                            font.bold: true
-                            width: 80
-                        }
-                        Text
-                        {
-                            text: "Points"
-                            color: "#222222"
-                            font.bold: true
-                        }
+                        Label { text: "RID";    font.bold: true; Layout.preferredWidth: 80 }
+                        Label { text: "Points"; font.bold: true; Layout.fillWidth: true }
                     }
 
                     Rectangle
                     {
-                        width: parent.width
+                        Layout.fillWidth: true
                         height: 1
-                        color: "#cccccc"
+                        color: palette.mid
                     }
 
                     ListView
                     {
                         id: robotView
-                        width: parent.width
-                        height: parent.height - 60
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
                         clip: true
 
                         model: ListModel { id: robotModel }
 
-                        delegate: Row
+                        delegate: RowLayout
                         {
-                            spacing: 10
-                            Text { text: model.rid;   color: "#222222" ; width: 80 }
-                            Text { text: model.score; color: "#222222" }
+                            width: robotView.width
+                            spacing: 0
+                            Label { text: model.rid; Layout.preferredWidth: 80 }
+                            Label { text: model.score; Layout.fillWidth: true }
                         }
                     }
                 }
             }
 
             // Log des messages 
-            Rectangle
+            Pane
             {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
-                color: "#f5f5f5"
-                border.color: "#cccccc"
-                border.width: 1
-                radius: 3
 
-                Column
+                background: Rectangle
+                {
+                    color: Qt.alpha(palette.window, 0.5)
+                    radius: 12
+                    border.color: palette.light
+                }
+
+                ColumnLayout
                 {
                     anchors.fill: parent
-                    anchors.margins: 5
-                    spacing: 5
+                    spacing: 8
 
-                    Text
+                    Label
                     {
                         text: "Log des messages"
                         font.bold: true
-                        color: "#222222"
+                        font.pixelSize: 14
+                    }
+
+                    // Séparateur
+                    Rectangle
+                    {
+                        Layout.fillWidth: true
+                        height: 1
+                        color: palette.mid
                     }
 
                     ListView
                     {
                         id: logView
-                        width: parent.width
-                        height: parent.height - 30
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
                         clip: true
 
                         model: ListModel { id: logModel }
 
-                        delegate: Text
+                        delegate: Label
                         {
                             width: logView.width
                             text: model.message
-                            color: "#222222"
                             padding: 2
+                            wrapMode: Label.WordWrap
                         }
 
                         // Scroll automatique vers le bas quand un message arrive

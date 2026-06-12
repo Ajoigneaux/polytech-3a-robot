@@ -5,9 +5,10 @@ from PySide6.QtQuickControls2 import QQuickStyle
 from ServerManager import ServerManager
 
 if __name__ == "__main__":
-    QQuickStyle.setStyle("Fusion")
+    QQuickStyle.setStyle("FluentWinUI3")
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
+    
 
     server_manager = ServerManager(8080)
     engine.rootContext().setContextProperty("server_manager", server_manager)
