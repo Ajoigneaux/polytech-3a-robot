@@ -48,6 +48,7 @@ ApplicationWindow
             startWindow.is_marty_connected = !result
             startWindow.is_referee_connected = !result
             if(result) {
+                client_server.bye()
                 main_stack.pop()
             }
         }

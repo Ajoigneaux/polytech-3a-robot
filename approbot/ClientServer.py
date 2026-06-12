@@ -30,6 +30,11 @@ class ClientServer(QObject):
         r = requests.post(f"{self.url}/hello")
         self.rid = r.json()["rid"]
     
+    @Slot()
+    def bye(self):
+        requests.post(f"{self.url}/bye", json={"rid": self.rid})
+        self.rid = None
+        print(f"[CLIENT] Déconnecté du serveur")
     
     
     
