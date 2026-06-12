@@ -83,7 +83,7 @@ Item {
 
                 // Connexion à l'arbitre si le champ n'est pas vide
                 if (refereeIpAddress.text !== "") {
-                    // APPEL DE LA CONNEXION A l'ARBITRE
+                    client_server.checkServer(refereeIpAddress.text)
                 }
             }
         }

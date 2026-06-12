@@ -54,16 +54,16 @@ ApplicationWindow
     }
 
     // A IMPLEMENTER
-    // Connections
-    // {
-    //     target: marty_to_referee 
+    Connections
+    {
+        target: client_server 
 
-    //     function onConnectionToRefereeSuccess(result)
-    //     {
-    //         startWindow.is_referee_connected = result
-    //         if(result) {
-    //             startWindow.checkNavigation()
-    //         }
-    //     }
-    // }
+        function onServerConnected(result)
+        {
+            startWindow.is_referee_connected = result
+            if(result) {
+                startWindow.checkNavigation()
+            }
+        }
+    }
 }

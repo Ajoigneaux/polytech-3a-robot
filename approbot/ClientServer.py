@@ -1,7 +1,10 @@
 import requests
-from PySide6.QtCore import QObject, Slot
+from PySide6.QtCore import QObject, Slot, Signal
 
 class ClientServer(QObject):
+
+    serverConnected = Signal(bool)
+
     def __init__(self, port):
         super().__init__()
         self.port = port
@@ -16,15 +19,17 @@ class ClientServer(QObject):
             r = requests.get(f"{self.url}/")
             if(r.status_code == 200):
                 self.hello()
-                print(f"{self.rid}")
+                print(f"[SERVER] Connecté, rid : {self.rid}")
+                self.serverConnected.emit(True)
                 
         except requests.ConnectionError:
-            print("connection failed")
+            print("[SERVER] Connexion échouée")
+            self.serverConnected.emit(False)
 
     def hello(self):
         r = requests.post(f"{self.url}/hello")
         self.rid = r.json()["rid"]
-
-        
+    
+    
     
     
