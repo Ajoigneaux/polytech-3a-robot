@@ -4,7 +4,7 @@ from PySide6.QtCore import QObject, Slot, Signal
 
 class MartyCalibration(QObject) :
 
-    calibrationColorPage=Signal()
+    currentColorDetectedSignal=Signal(str)
     colors = {}
     currentColor = ""
 
@@ -29,12 +29,13 @@ class MartyCalibration(QObject) :
         colorRead = self.robot.get_color_sensor_hex("left")
         colorReadHexa = "0x" + colorRead
         self.currentColor = self.findCloserColor(colorReadHexa)
+        self.currentColorDetectedSignal.emit(self.currentColor)
 
     
     def findCloserColor(self, curentColor):
         interval = 0x080808
         for color in self.colors.items():
-            print(color[0])
+            # print(color[0])
             if int(curentColor, 16) < int(color[1], 16) + interval and int(curentColor, 16) > int(color[1], 16) - interval :
                 return color[0]
 

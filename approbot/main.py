@@ -28,6 +28,9 @@ def connectSignals():
     marty_read_dance.rightArmBackRequested.connect(marty_interaction.rightArmBack)
     marty_read_dance.leftArmBackRequested.connect(marty_interaction.leftArmBack)
 
+    marty_calibration.currentColorDetectedSignal.connect(marty_read_dance.setCurrentColor)
+    marty_read_dance.whatIsThisColorSignal.connect(marty_calibration.whatIsThisColor)
+
 if __name__ == "__main__":
     QQuickStyle.setStyle("FluentWinUI3")
     app = QGuiApplication(sys.argv)

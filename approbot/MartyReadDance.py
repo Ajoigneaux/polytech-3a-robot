@@ -16,12 +16,22 @@ class MartyReadDance(QObject):
     rightArmBackRequested = Signal()
     leftArmBackRequested = Signal()
     resetArmsRequested = Signal()
+    #Color management
+    whatIsThisColorSignal=Signal()
+    #
+    currentColor = ""
+
+    
 
     def __init__(self):
         super().__init__()
         self.dance_file_path=""
         self.instruction_seq=[]#[[nbr_step, step], ...]
         self.instruction_act={}#{'Color char': [action1, action2,...]}
+
+    @Slot(str)
+    def setCurrentColor(self, currentColor) :
+        self.currentColor = currentColor
 
     @Slot(str)
     def setDanceFile(self, file_path):
@@ -47,13 +57,16 @@ class MartyReadDance(QObject):
 
     @Slot(int)
     def startSequency(self, steps_number):#A BESOIN DU MODE BLOQUANT DES ACTIONS ?
+        seq_len=len(self.instruction_seq)
         for i in range(steps_number):
             #Get movements
-            seq_len=len(self.instruction_seq)
             steps, mov=self.instruction_seq[i%seq_len]
             #Execute movement
             self.executeMovement(mov, int(steps))
             #Check color sensor -> While marty.is_moving() ?
+            self.whatIsThisColorSignal.emit()
+            print(self.currentColor)
+            # print("TEST")
             # color_detected=???
             #Perform action associated
             # self.executeAction(color_detected)
