@@ -6,14 +6,16 @@ DEFAULT_IP = "192.168.1.2"
 
 class MartyInteraction(QObject):
 
-    calibrationColorPage=Signal()
-
-    def __init__(self, robot_):
+    def __init__(self):
         super().__init__()
-        self.robot=robot_
+        self.robot=None
 
         self.prec_angle_right_arm=0
         self.prec_angle_left_arm=0
+
+    @Slot(Marty)
+    def setRobot(self, robot_):
+        self.robot=robot_
 
     @Slot(int)
     def moveUp(self, steps):

@@ -11,6 +11,9 @@ from MartyReadDance import MartyReadDance
 from PySide6.QtQuickControls2 import QQuickStyle
 
 def connectSignals():
+    marty_manager.robotUpdated.connect(marty_interaction.setRobot)
+    marty_manager.robotUpdated.connect(marty_calibration.setRobot)
+
     marty_read_dance.moveUpRequested.connect(marty_interaction.moveUp)
     marty_read_dance.moveRightRequested.connect(marty_interaction.moveRight)
     marty_read_dance.moveBackRequested.connect(marty_interaction.moveDown)
@@ -33,10 +36,10 @@ if __name__ == "__main__":
     marty_manager = MartyManager()
     engine.rootContext().setContextProperty("marty_manager", marty_manager)
 
-    marty_interaction = MartyInteraction(marty_manager.robot)
+    marty_interaction = MartyInteraction()
     engine.rootContext().setContextProperty("marty_interaction", marty_interaction)
 
-    marty_calibration = MartyCalibration(marty_manager.robot)
+    marty_calibration = MartyCalibration()
     engine.rootContext().setContextProperty("marty_calibration", marty_calibration)
 
     marty_read_dance = MartyReadDance()

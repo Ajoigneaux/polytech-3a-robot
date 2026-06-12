@@ -7,11 +7,14 @@ class MartyCalibration(QObject) :
     calibrationColorPage=Signal()
     colors = {}
     currentColor = ""
-    robot = None
 
-    def __init__(self, robot):
+    def __init__(self):
         super().__init__()
-        self.robot = robot
+        self.robot = None
+
+    @Slot(Marty)
+    def setRobot(self, robot_):
+        self.robot=robot_
 
     @Slot(str)
     def calibrationColors(self, color):
@@ -34,9 +37,6 @@ class MartyCalibration(QObject) :
             print(color[0])
             if int(curentColor, 16) < int(color[1], 16) + interval and int(curentColor, 16) > int(color[1], 16) - interval :
                 return color[0]
-        
-    def setRobot(self, martyInteraction):#ENLEVER ????
-        self.robot = martyInteraction.robot
 
     
         

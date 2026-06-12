@@ -7,6 +7,7 @@ class MartyManager(QObject):
 
     connectionToMartySuccess=Signal(bool)
     disconnectionToMartySuccess=Signal(bool)
+    robotUpdated=Signal(Marty)
     batteryLevelChanged=Signal(int)
 
     def __init__(self):
@@ -27,6 +28,7 @@ class MartyManager(QObject):
             self.robot=Marty("wifi", ip_address)
             print("Connexion to Marty at " + ip_address)
             self.connectionToMartySuccess.emit(True)
+            self.robotUpdated.emit(self.robot)
             #Battery update and start timer
             self.timer_battery.start()
             self.updateBattery()

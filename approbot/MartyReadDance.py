@@ -26,7 +26,6 @@ class MartyReadDance(QObject):
     @Slot(str)
     def setDanceFile(self, file_path):
         self.dance_file_path=file_path
-        #clean_path = QUrl(filepath).toLocalFile()
         self.readDanceFile()
 
     def readDanceFile(self):
