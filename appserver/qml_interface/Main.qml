@@ -91,6 +91,25 @@ ApplicationWindow
                 }
             }
 
+            Item { Layout.preferredWidth: 20 }
+            
+        
+            Switch 
+            {
+                text: qsTr("Localhost uniquement")
+                checked: false
+                onClicked: server_manager.set_localhost(checked)
+        
+            }
+            
+
+            Text
+            {
+                text : "IP : " + server_manager.get_local_ip()
+                color: "white"
+                font.bold: true
+            }
+
             Item { Layout.fillWidth: true }
 
             Button
