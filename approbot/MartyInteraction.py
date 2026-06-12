@@ -1,82 +1,41 @@
 from martypy import Marty
-from PySide6.QtCore import QObject, Slot, Signal, QTimer
+from PySide6.QtCore import QObject, Slot, Signal
+from MartyCalibration import MartyCalibration
 
 DEFAULT_IP = "192.168.1.2"
 
 class MartyInteraction(QObject):
 
-    connectionToMartySuccess=Signal(bool)
-    disconnectionToMartySuccess=Signal(bool)
-    batteryLevelChanged=Signal(int)
-
     def __init__(self):
         super().__init__()
         self.robot=None
-        self.battery=0
-        #Timer for battery
-        self.timer_battery = QTimer(self)
-        self.timer_battery.setInterval(5000)  #Every 5 seconds
-        self.timer_battery.timeout.connect(self.updateBattery)
-        #Start timer after robot connection
+
         self.prec_angle_right_arm=0
         self.prec_angle_left_arm=0
 
-    @Slot(str)
-    def connect(self, ip_address):
-        try:
-            if(ip_address==""):
-                ip_address=DEFAULT_IP
-            self.robot=Marty("wifi", ip_address)
-            print("Connexion to Marty at " + ip_address)
-            self.connectionToMartySuccess.emit(True)
-            #Battery update and start timer
-            self.timer_battery.start()
-            self.updateBattery()
-        except:
-            print("Failed to connect to Marty at : " + ip_address)
-            self.connectionToMartySuccess.emit(False)
+    @Slot(Marty)
+    def setRobot(self, robot_):
+        self.robot=robot_
 
-    @Slot()
-    def disconnect(self):
-        try:
-            print("Disconnection to Marty")
-            self.robot.close()
-            self.disconnectionToMartySuccess.emit(True)
-            self.timer_battery.stop();
-        except:
-            print("Disconnection to Marty failed")
-            self.disconnectionToMartySuccess.emit(False)
-
-    @Slot(result=int)
-    def updateBattery(self):
-        try:
-            new_level = int(self.robot.get_battery_remaining())
-            if(new_level!=self.battery):
-                print(new_level)
-                self.battery = new_level
-                self.batteryLevelChanged.emit(new_level)
-        except:
-            print("Error on fetch battery level")
-
-    @Slot()
-    def moveUp(self):
+    @Slot(int)
+    def moveUp(self, steps):
         print("Up")
-        self.robot.walk(num_steps=1, step_length=25, move_time=1500,blocking=False)
+        self.robot.walk(num_steps=steps, step_length=25, move_time=1500,blocking=False)
 
-    @Slot()
-    def moveRight(self):
+    @Slot(int)
+    def moveRight(self, steps):
         print("Right")
-        self.robot.sidestep(side="right", steps=1, step_length=35, move_time=1000, blocking=False)
+        self.robot.sidestep(side="right", steps=steps, step_length=35, move_time=1000, blocking=False)
 
-    @Slot()
-    def moveDown(self):
+    @Slot(int)
+    def moveDown(self, steps):
         print("Down")
-        self.robot.walk(num_steps=1, step_length=-25, move_time=1500,blocking=0)
+        self.robot.walk(num_steps=steps, step_length=-25, move_time=1500,blocking=0)
 
-    @Slot()
-    def moveLeft(self):
+    @Slot(int)
+    def moveLeft(self, steps):
         print("Left")
-        self.robot.sidestep(side="left", steps=1, step_length=35, move_time=1000, blocking=False)
+        self.robot.sidestep(side="left", steps=steps, step_length=35, move_time=1000, blocking=False)
 
     @Slot()
     def rightArmForward(self):
@@ -102,14 +61,13 @@ class MartyInteraction(QObject):
     def resetArms(self):
         self.robot.arms(left_angle=0, right_angle=0, move_time=500, blocking=False)
 
-    # my_marty.dance()
-    # print(my_marty.wiggle(1000))
-    # print(my_marty.get_battery_remaining())
-    # my_marty.get_ready(True)
-    # my_marty.walk(3,move_time=1000)
-    # my_marty.send_file()
-    # my_marty.get
+    @Slot(str)
+    def eyesExpression(self, expr):#'angry', 'excited', 'normal', 'wide', or 'wiggle' 
+        self.robot.eyes(pose_or_angle=expr, move_time=500, blocking=False)
 
+    @Slot(str)
+    def eyesColor(self, color_needed):#white, red, blue, yellow, green, teal, pink, purple, orange or hex value
+        self.disco_color(color=color_needed, region='all')
 
     # print("test")
     # my_marty.close()
