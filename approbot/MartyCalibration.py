@@ -6,6 +6,7 @@ class MartyCalibration(QObject) :
 
     currentColorDetectedSignal=Signal(str)
     colors = {}
+    nameToLetter={"Noir":"N", "Mauve":"P", "Bleu foncé":"B", "Jaune":"Y", "Bleu ciel":"C", "Vert":"G", "Rouge":"R"}
     currentColor = ""
 
     def __init__(self):
@@ -20,7 +21,8 @@ class MartyCalibration(QObject) :
     def calibrationColors(self, color):
         colorRead = self.robot.get_color_sensor_hex("left")
         colorHexa = "0x" + colorRead
-        self.colors[color] = colorHexa
+        colorLetter=self.nameToLetter[color]
+        self.colors[colorLetter] = colorHexa
 
 
 

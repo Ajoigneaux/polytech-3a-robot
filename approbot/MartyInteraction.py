@@ -39,52 +39,41 @@ class MartyInteraction(QObject):
 
     @Slot()
     def rightArmForward(self):
+        print("BRASBOUGE")
         self.prec_angle_right_arm=100
         self.robot.arms(left_angle=self.prec_angle_left_arm, right_angle=100, move_time=500, blocking=False)
 
     @Slot()
     def leftArmForward(self):
+        print("BRASBOUGE")
         self.prec_angle_left_arm=100
         self.robot.arms(left_angle=100, right_angle=self.prec_angle_right_arm, move_time=500, blocking=False)
 
     @Slot()
     def rightArmBack(self):
+        print("BRASBOUGE")
         self.prec_angle_right_arm=-100
         self.robot.arms(left_angle=self.prec_angle_left_arm, right_angle=-100, move_time=500, blocking=False)
 
     @Slot()
     def leftArmBack(self):
+        print("BRASBOUGE")
         self.prec_angle_left_arm=-100
         self.robot.arms(left_angle=-100, right_angle=self.prec_angle_right_arm, move_time=500, blocking=False)
 
     @Slot()
     def resetArms(self):
+        print("BRARESET")
         self.prec_angle_left_arm=0
         self.prec_angle_right_arm=0
         self.robot.arms(left_angle=0, right_angle=0, move_time=500, blocking=False)
 
     @Slot(str)
     def eyesExpression(self, expr):#'angry', 'excited', 'normal', 'wide', or 'wiggle' 
+        print("YEUXBOUGE: "+expr)
         self.robot.eyes(pose_or_angle=expr, move_time=500, blocking=False)
 
     @Slot(str)
     def eyesColor(self, color_needed):#white, red, blue, yellow, green, teal, pink, purple, orange or hex value
-        self.disco_color(color=color_needed, region='all')
-
-    # print("test")
-    # my_marty.close()
-
-    # import requests
-
-    # r = requests.get("http://192.168.0.105/")
-    # print(r.status_code)
-    # print(r.text)
-
-
-    # r = requests.get("http://192.168.0.105/")
-    # print(r.status_code)
-    # print(r.text)
-
-    # p = requests.post("http://192.168.0.105/hello")
-    # print(p.status_code)
-    # print(p.content)
+        print("YEUXBOUGE")
+        self.robot.disco_color(color=color_needed, region=1)
