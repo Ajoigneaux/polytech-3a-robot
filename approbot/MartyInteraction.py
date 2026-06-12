@@ -19,22 +19,18 @@ class MartyInteraction(QObject):
 
     @Slot(int)
     def moveUp(self, steps):
-        print("Up")
         self.robot.walk(num_steps=steps, step_length=25, move_time=1500,blocking=True)
 
     @Slot(int)
     def moveRight(self, steps):
-        print("Right")
         self.robot.sidestep(side="right", steps=steps, step_length=35, move_time=1000, blocking=True)
 
     @Slot(int)
     def moveDown(self, steps):
-        print("Down")
         self.robot.walk(num_steps=steps, step_length=-25, move_time=1500,blocking=True)
 
     @Slot(int)
     def moveLeft(self, steps):
-        print("Left")
         self.robot.sidestep(side="left", steps=steps, step_length=35, move_time=1000, blocking=True)
 
     @Slot()
@@ -74,22 +70,12 @@ class MartyInteraction(QObject):
 
     @Slot(str)
     def eyesColor(self, color_needed):#white, red, blue, yellow, green, teal, pink, purple, orange or hex value
-        self.disco_color(color=color_needed, region='all')
-
-    # print("test")
-    # my_marty.close()
-
-    # import requests
-
-    # r = requests.get("http://192.168.0.105/")
-    # print(r.status_code)
-    # print(r.text)
-
-
-    # r = requests.get("http://192.168.0.105/")
-    # print(r.status_code)
-    # print(r.text)
-
-    # p = requests.post("http://192.168.0.105/hello")
-    # print(p.status_code)
-    # print(p.content)
+        if color_needed=="off":
+            print("YEUX OFF")
+            self.robot.disco_off()
+        elif color_needed=="rainbow":
+            self.robot.disco_color(color="blue", region=0)
+            self.robot.disco_color(color="yellow", region=1)
+            self.robot.disco_color(color="red", region=2)
+        else:
+            self.robot.disco_color(color=color_needed, region="all")
