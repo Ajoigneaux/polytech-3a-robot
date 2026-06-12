@@ -29,6 +29,20 @@ class ClientServer(QObject):
     def hello(self):
         r = requests.post(f"{self.url}/hello")
         self.rid = r.json()["rid"]
+
+    def start(self):
+        r = requests.post(f"{self.url}/start", json={"rid": self.rid})
+        return r.json()["moves"]
+    
+    def step(self, col, arm, exp):
+        r = requests.post(f"{self.url}/step", json={
+            "rid": self.rid, "col": col, "arm": arm, "exp": exp
+        })
+        return r.json()["points"]
+    
+    def score(self):
+        r = requests.get(f"{self.url}/score", params={"rid": self.rid})
+        return r.json()["score"]
     
     @Slot()
     def bye(self):
