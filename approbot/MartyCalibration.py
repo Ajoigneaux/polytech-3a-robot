@@ -18,7 +18,7 @@ class MartyCalibration(QObject) :
 
     @Slot(str)
     def calibrationColors(self, color):
-        colorRead = self.robot.get_color_sensor_hex(self.robot, "left")
+        colorRead = self.robot.get_color_sensor_hex("left")
         colorHexa = "0x" + colorRead
         self.colors[color] = colorHexa
 
@@ -26,7 +26,7 @@ class MartyCalibration(QObject) :
 
     @Slot()
     def whatIsThisColor(self):
-        colorRead = self.robot.get_color_sensor_hex(self.robot, "left")
+        colorRead = self.robot.get_color_sensor_hex("left")
         colorReadHexa = "0x" + colorRead
         self.currentColor = self.findCloserColor(colorReadHexa)
 
