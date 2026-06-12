@@ -7,6 +7,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from Robot import Robot
 from Battle import Battle
 import threading
+import socket
 
 class ServerManager(QObject):
 
@@ -23,15 +24,35 @@ class ServerManager(QObject):
         self.battle = Battle()
         self.server = None
         self.thread = None
+        self.host = ""
 
     serverStateChanged = Signal(bool)  # True = démarré, False = arrêté
+
+    @Slot(result=str)
+    def get_local_ip(self):
+        try:
+            s= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            ip = s.getsockname()[0]
+            s.close()
+            return ip
+        except Exception:
+            return "127.0.0.1"
+        
+    @Slot(bool)
+    def set_localhost(self, localhost: bool):
+        if localhost :
+            self.host = "127.0.0.1"
+        else :
+            ""
+        
 
     @Slot()
     def start(self):
         if self.server is not None:
             return  # déjà démarré
 
-        self.server = HTTPServer(("", self.port), self.make_handler())
+        self.server = HTTPServer((self.host, self.port), self.make_handler())
         self.thread = threading.Thread(target=self.server.serve_forever)
         self.thread.daemon = True  # le thread s'arrête si l'application se ferme
         self.thread.start()
