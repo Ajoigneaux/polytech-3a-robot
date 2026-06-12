@@ -92,7 +92,7 @@ Item {
                         Button { text: "↑"; onClicked: marty_interaction.moveUp(1); highlighted: true }
                         Rectangle { width: 40; height: 40; color: "transparent" }
                         Button { text: "←"; onClicked: marty_interaction.moveLeft(1); highlighted: true }
-                        Rectangle { width: 40; height: 40; color: "transparent" }
+                        Button { text: "○"; onClicked: marty_interaction.stand(); highlighted: true }
                         Button { text: "→"; onClicked: marty_interaction.moveRight(1); highlighted: true }
                         Rectangle { width: 40; height: 40; color: "transparent" }
                         Button { text: "↓"; onClicked: marty_interaction.moveDown(1); highlighted: true }
