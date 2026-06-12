@@ -16,12 +16,22 @@ class MartyReadDance(QObject):
     rightArmBackRequested = Signal()
     leftArmBackRequested = Signal()
     resetArmsRequested = Signal()
+    #Color management
+    whatIsThisColorSignal=Signal()
+    #
+    currentColor = ""
+
+    
 
     def __init__(self):
         super().__init__()
         self.dance_file_path=""
         self.instruction_seq=[]#[[nbr_step, step], ...]
         self.instruction_act={}#{'Color char': [action1, action2,...]}
+
+    @Slot(str)
+    def setCurrentColor(self, currentColor) :
+        self.currentColor = currentColor
 
     @Slot(str)
     def setDanceFile(self, file_path):
@@ -33,6 +43,8 @@ class MartyReadDance(QObject):
         dance_file=f.read().split('\n')
         dance_file.pop(0)
         act_index=dance_file.index("ACT")
+        self.instruction_seq=[] #Reset
+        self.instruction_act={} #Reset
         self.parseSequence(dance_file[:act_index])
         self.parseAct(dance_file[act_index+1:])
 
@@ -47,16 +59,21 @@ class MartyReadDance(QObject):
 
     @Slot(int)
     def startSequency(self, steps_number):#A BESOIN DU MODE BLOQUANT DES ACTIONS ?
+        #Reset expressions
+        self.eyesExpressionRequested.emit("normal")
+        self.eyesColorRequested.emit("off")
+        self.resetArmsRequested.emit()
+        seq_len=len(self.instruction_seq)
         for i in range(steps_number):
             #Get movements
-            seq_len=len(self.instruction_seq)
             steps, mov=self.instruction_seq[i%seq_len]
             #Execute movement
             self.executeMovement(mov, int(steps))
             #Check color sensor -> While marty.is_moving() ?
-            # color_detected=???
+            self.whatIsThisColorSignal.emit()
+            print(self.currentColor)
             #Perform action associated
-            # self.executeAction(color_detected)
+            self.executeAction(self.currentColor)
             #MartyInteraction emit when finished actions ?
             #Send summary to server
 
@@ -73,6 +90,10 @@ class MartyReadDance(QObject):
                 self.moveLeftRequested.emit(steps)
     
     def executeAction(self, color_letter):#ex: color_letter="A"
+        #Reset expressions
+        self.eyesExpressionRequested.emit("normal")
+        self.eyesColorRequested.emit("off")
+        self.resetArmsRequested.emit()
         if color_letter in self.instruction_act:
             for act in self.instruction_act[color_letter]:
                 self.decodeAction(act)
@@ -96,6 +117,7 @@ class MartyReadDance(QObject):
                     self.eyesColorRequested.emit("#000000")
                     self.eyesExpressionRequested.emit("normal")
                 case "SD":
+                    print("triste")
                     self.eyesColorRequested.emit("blue")
                     self.eyesExpressionRequested.emit("wide")
                 case "NG":
@@ -106,4 +128,4 @@ class MartyReadDance(QObject):
                     self.eyesExpressionRequested.emit("excited")
                 case "DN":
                     self.eyesExpressionRequested.emit("wiggle")
-                    #YEUX ARC EN CIEL
+                    self.eyesColorRequested.emit("rainbow")
