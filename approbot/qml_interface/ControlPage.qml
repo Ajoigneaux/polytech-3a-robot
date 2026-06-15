@@ -202,7 +202,7 @@ Item {
                         highlighted: true
                         enabled: is_file_selected
                         Layout.alignment: Qt.AlignRight
-                        onClicked: marty_read_dance.startSequency(10)//NOMBRE DE PAS DEFINI PAR LE SERVEUR
+                        onClicked: marty_read_dance.startSequency()
                     }
                 }
             }

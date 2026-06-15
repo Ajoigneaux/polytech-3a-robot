@@ -25,7 +25,7 @@ class MartyManager(QObject):
         try:
             if(ip_address==""):
                 ip_address=DEFAULT_IP
-            # self.robot=Marty("wifi", ip_address)
+            self.robot=Marty("wifi", ip_address)
             print("Connexion to Marty at " + ip_address)
             self.connectionToMartySuccess.emit(True)
             self.robotUpdated.emit(self.robot)

@@ -35,6 +35,8 @@ def connectSignals():
     marty_read_dance.addActionToServer.connect(client_server.addAction)
     marty_read_dance.addExpressionToServer.connect(client_server.addExpression)
     marty_read_dance.sendStep.connect(client_server.sendStep)
+    marty_read_dance.getStepsNumber.connect(client_server.start)
+    client_server.numberSteps.connect(marty_read_dance.setStepsNumber)
 
 if __name__ == "__main__":
     QQuickStyle.setStyle("FluentWinUI3")

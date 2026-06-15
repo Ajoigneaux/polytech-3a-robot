@@ -22,6 +22,7 @@ class MartyReadDance(QObject):
     addExpressionToServer=Signal(str)
     addActionToServer=Signal(str)
     sendStep=Signal(str)
+    getStepsNumber=Signal()
 
     def __init__(self):
         super().__init__()
@@ -29,10 +30,15 @@ class MartyReadDance(QObject):
         self.instruction_seq=[]#[[nbr_step, step], ...]
         self.instruction_act={}#{'Color char': [action1, action2,...]}
         self.currentColor = ""
+        self.steps_number=0
 
     @Slot(str)
     def setCurrentColor(self, currentColor) :
         self.currentColor = currentColor
+
+    @Slot(int)
+    def setStepsNumber(self, steps_number):
+        self.steps_number=steps_number
 
     @Slot(str)
     def setDanceFile(self, file_path):
@@ -59,13 +65,16 @@ class MartyReadDance(QObject):
             self.instruction_act[splited_act[0]]=splited_act[1:]
 
     @Slot(int)
-    def startSequency(self, steps_number):#A BESOIN DU MODE BLOQUANT DES ACTIONS ?
+    def startSequency(self):
         #Reset expressions
         self.eyesExpressionRequested.emit("normal")
         self.eyesColorRequested.emit("off")
         self.resetArmsRequested.emit()
         seq_len=len(self.instruction_seq)
-        for i in range(steps_number):
+        #Get steps number
+        self.getStepsNumber.emit()
+        #Delay ?
+        for i in range(self.steps_number):
             #Get movements
             steps, mov=self.instruction_seq[i%seq_len]
             #Execute movement

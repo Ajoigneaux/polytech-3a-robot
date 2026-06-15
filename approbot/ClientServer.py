@@ -4,6 +4,7 @@ from PySide6.QtCore import QObject, Slot, Signal
 class ClientServer(QObject):
 
     serverConnected = Signal(bool)
+    numberSteps=Signal(int)
 
     def __init__(self, port):
         super().__init__()
@@ -32,9 +33,12 @@ class ClientServer(QObject):
         r = requests.post(f"{self.url}/hello")
         self.rid = r.json()["rid"]
 
+    @Slot()
     def start(self):
         r = requests.post(f"{self.url}/start", json={"rid": self.rid})
-        return r.json()["moves"]
+        steps_wanted=int(r.json()["moves"])
+        self.numberSteps.emit(steps_wanted)
+
     
     @Slot(str)
     def sendStep(self, col):
