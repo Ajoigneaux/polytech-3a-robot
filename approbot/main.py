@@ -32,6 +32,10 @@ def connectSignals():
     marty_calibration.currentColorDetectedSignal.connect(marty_read_dance.setCurrentColor)
     marty_read_dance.whatIsThisColorSignal.connect(marty_calibration.whatIsThisColor)
 
+    marty_read_dance.addActionToServer.connect(ClientServer.addAction)
+    marty_read_dance.addExpressionToServer.connect(ClientServer.addExpression)
+    marty_read_dance.sendStep.connect(ClientServer.sendStep)
+
 if __name__ == "__main__":
     QQuickStyle.setStyle("FluentWinUI3")
     app = QGuiApplication(sys.argv)

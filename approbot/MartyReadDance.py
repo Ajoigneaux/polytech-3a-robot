@@ -18,16 +18,17 @@ class MartyReadDance(QObject):
     resetArmsRequested = Signal()
     #Color management
     whatIsThisColorSignal=Signal()
-    #
-    currentColor = ""
-
-    
+    #Connection to server
+    addExpressionToServer=Signal(str)
+    addActionToServer=Signal(str)
+    sendStep=Signal(str)
 
     def __init__(self):
         super().__init__()
         self.dance_file_path=""
         self.instruction_seq=[]#[[nbr_step, step], ...]
         self.instruction_act={}#{'Color char': [action1, action2,...]}
+        self.currentColor = ""
 
     @Slot(str)
     def setCurrentColor(self, currentColor) :
@@ -76,6 +77,7 @@ class MartyReadDance(QObject):
             self.executeAction(self.currentColor)
             #MartyInteraction emit when finished actions ?
             #Send summary to server
+            self.sendStep.emit(self.currentColor)
 
     def executeMovement(self, mov, steps):
         match mov:
@@ -104,28 +106,37 @@ class MartyReadDance(QObject):
             match action[1:]:
                 case "LU":
                     self.leftArmForwardRequested.emit()
+                    self.addActionToServer.emit("ALU")
                 case "RU":
                     self.rightArmForwardRequested.emit()
+                    self.addActionToServer.emit("ARU")
                 case "LB":
                     self.leftArmBackRequested.emit()
+                    self.addActionToServer.emit("ALB")
                 case "RB":
                     self.rightArmBackRequested.emit()
+                    self.addActionToServer.emit("ARB")
         #Expressions
         if action[0]=="X":
             match action[1:]:
                 case "NT":
                     self.eyesColorRequested.emit("#000000")
                     self.eyesExpressionRequested.emit("normal")
+                    self.addExpressionToServer.emit("XNT")
                 case "SD":
                     print("triste")
                     self.eyesColorRequested.emit("blue")
                     self.eyesExpressionRequested.emit("wide")
+                    self.addExpressionToServer.emit("XSD")
                 case "NG":
                     self.eyesColorRequested.emit("red")
                     self.eyesExpressionRequested.emit("angry")
+                    self.addExpressionToServer.emit("XNG")
                 case "HP":
                     self.eyesColorRequested.emit("green")
                     self.eyesExpressionRequested.emit("excited")
+                    self.addExpressionToServer.emit("XHP")
                 case "DN":
                     self.eyesExpressionRequested.emit("wiggle")
                     self.eyesColorRequested.emit("rainbow")
+                    self.addExpressionToServer.emit("XDN")

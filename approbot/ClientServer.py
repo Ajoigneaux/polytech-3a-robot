@@ -10,6 +10,8 @@ class ClientServer(QObject):
         self.port = port
         self.url = ""
         self.rid= None
+        self.current_actions=""
+        self.current_expressions=""
 
     @Slot(str)
     def checkServer(self, ip_server):
@@ -34,10 +36,14 @@ class ClientServer(QObject):
         r = requests.post(f"{self.url}/start", json={"rid": self.rid})
         return r.json()["moves"]
     
-    def step(self, col, arm, exp):
+    @Slot(str)
+    def sendStep(self, col):
         r = requests.post(f"{self.url}/step", json={
-            "rid": self.rid, "col": col, "arm": arm, "exp": exp
+            "rid": self.rid, "col": col, "arm": self.current_actions, "exp": self.current_expressions
         })
+        self.current_actions=""
+        self.current_expressions=""
+        print(f"J AI ENVOYE UN PAS : {self.current_actions} ET {self.current_expressions}")
         return r.json()["points"]
     
     def score(self):
@@ -50,5 +56,14 @@ class ClientServer(QObject):
         self.rid = None
         print(f"[CLIENT] Déconnecté du serveur")
     
-    
+    @Slot(str)
+    def addAction(self, step):#Called at each step realized
+        if self.current_expressions!="" :
+            self.current_expressions+="+"+step
+        else:
+            self.current_expressions=step
+
+    @Slot(str)
+    def addExpression(self, act):#Called at each expression realized
+        self.current_expressions=act
     

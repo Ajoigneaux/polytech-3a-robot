@@ -66,7 +66,6 @@ class MartyInteraction(QObject):
     @Slot(str)
     def eyesColor(self, color_needed):#white, red, blue, yellow, green, teal, pink, purple, orange or hex value
         if color_needed=="off":
-            print("YEUX OFF")
             self.robot.disco_off()
         elif color_needed=="rainbow":
             self.robot.disco_color(color="blue", region=0)
