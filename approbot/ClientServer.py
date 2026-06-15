@@ -43,7 +43,6 @@ class ClientServer(QObject):
         })
         self.current_actions=""
         self.current_expressions=""
-        print(f"J AI ENVOYE UN PAS : {self.current_actions} ET {self.current_expressions}")
         return r.json()["points"]
     
     def score(self):
@@ -58,12 +57,12 @@ class ClientServer(QObject):
     
     @Slot(str)
     def addAction(self, step):#Called at each step realized
-        if self.current_expressions!="" :
-            self.current_expressions+="+"+step
+        if self.current_actions!="" :
+            self.current_actions+="+"+step
         else:
-            self.current_expressions=step
+            self.current_actions=step
 
     @Slot(str)
-    def addExpression(self, act):#Called at each expression realized
-        self.current_expressions=act
+    def addExpression(self, exp):#Called at each expression realized
+        self.current_expressions=exp
     
