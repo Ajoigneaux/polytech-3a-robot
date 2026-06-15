@@ -31,7 +31,10 @@ Item {
                 text: "✕"
                 Layout.preferredWidth: 40
                 font.pixelSize: 18
-                onClicked: marty_manager.disconnect()//AJOUTER DECONNEXION ARBITRE
+                onClicked: {
+                    client_server.bye()
+                    marty_manager.disconnect()
+                }
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("Déconnexion")
             }
