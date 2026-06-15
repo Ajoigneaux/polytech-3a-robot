@@ -17,21 +17,21 @@ class MartyInteraction(QObject):
     def setRobot(self, robot_):
         self.robot=robot_
 
-    @Slot(int)
-    def moveUp(self, steps):
-        self.robot.walk(num_steps=steps, step_length=25, move_time=1500,blocking=True)
+    @Slot(int, bool)
+    def moveUp(self, steps, block_mode):
+        self.robot.walk(num_steps=steps, step_length=25, move_time=1500,blocking=block_mode)
 
-    @Slot(int)
-    def moveRight(self, steps):
-        self.robot.sidestep(side="right", steps=steps, step_length=35, move_time=1000, blocking=True)
+    @Slot(int, bool)
+    def moveRight(self, steps, block_mode):
+        self.robot.sidestep(side="right", steps=steps, step_length=35, move_time=1000, blocking=block_mode)
 
-    @Slot(int)
-    def moveDown(self, steps):
-        self.robot.walk(num_steps=steps, step_length=-25, move_time=1500,blocking=True)
+    @Slot(int, bool)
+    def moveDown(self, steps, block_mode):
+        self.robot.walk(num_steps=steps, step_length=-25, move_time=1500,blocking=block_mode)
 
-    @Slot(int)
-    def moveLeft(self, steps):
-        self.robot.sidestep(side="left", steps=steps, step_length=35, move_time=1000, blocking=True)
+    @Slot(int, bool)
+    def moveLeft(self, steps, block_mode):
+        self.robot.sidestep(side="left", steps=steps, step_length=35, move_time=1000, blocking=block_mode)
 
     @Slot()
     def rightArmForward(self):

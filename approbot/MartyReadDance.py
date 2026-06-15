@@ -3,10 +3,10 @@ from PySide6.QtCore import QObject, Slot, Signal, QTimer
 class MartyReadDance(QObject):
 
     #Movements signals
-    moveUpRequested = Signal(int)
-    moveRightRequested = Signal(int)
-    moveBackRequested = Signal(int)
-    moveLeftRequested = Signal(int)
+    moveUpRequested = Signal(int, bool)
+    moveRightRequested = Signal(int, bool)
+    moveBackRequested = Signal(int, bool)
+    moveLeftRequested = Signal(int, bool)
     #Eyes signals
     eyesExpressionRequested = Signal(str)
     eyesColorRequested = Signal(str)
@@ -82,14 +82,14 @@ class MartyReadDance(QObject):
     def executeMovement(self, mov, steps):
         match mov:
             case "U":
-                self.moveUpRequested.emit(steps)
+                self.moveUpRequested.emit(steps, True)
                 #Log ?
             case "R":
-                self.moveRightRequested.emit(steps)
+                self.moveRightRequested.emit(steps, True)
             case "B":
-                self.moveBackRequested.emit(steps)
+                self.moveBackRequested.emit(steps, True)
             case "L":
-                self.moveLeftRequested.emit(steps)
+                self.moveLeftRequested.emit(steps, True)
     
     def executeAction(self, color_letter):#ex: color_letter="A"
         #Reset expressions
