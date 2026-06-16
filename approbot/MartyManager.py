@@ -54,9 +54,9 @@ class MartyManager(QObject):
         try:
             # print("try get battery")
             new_level = int(self.robot.get_battery_remaining())
-            if(new_level!=self.battery):
-                print(new_level)
-                self.battery = new_level
-                self.batteryLevelChanged.emit(new_level)
+            # if(new_level!=self.battery):
+                # print(new_level)
+            self.battery = new_level
+            self.batteryLevelChanged.emit(new_level)
         except:
             print("Error on fetch battery level")

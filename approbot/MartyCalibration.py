@@ -17,7 +17,7 @@ class MartyCalibration(QObject) :
     @Slot()
     def readColor(self):
         color = self.whatIsThisColor()
-        for key, value in self.nameToLetter:
+        for key, value in self.nameToLetter.items():
             if value == color:
                 self.currentColorDetectedTextSignal.emit(key)
 
