@@ -54,6 +54,10 @@ class MartyInteraction(QObject):
         self.robot.arms(left_angle=-100, right_angle=self.prec_angle_right_arm, move_time=500, blocking=False)
 
     @Slot()
+    def stand(self):
+        self.robot.get_ready()
+
+    @Slot()
     def resetArms(self):
         self.prec_angle_left_arm=0
         self.prec_angle_right_arm=0
