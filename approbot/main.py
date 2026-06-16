@@ -3,6 +3,7 @@ import sys
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
+from ClientServer import ClientServer
 from MartyManager import MartyManager
 from MartyInteraction import MartyInteraction
 from MartyCalibration import MartyCalibration
@@ -31,6 +32,12 @@ def connectSignals():
     marty_calibration.currentColorDetectedSignal.connect(marty_read_dance.setCurrentColor)
     marty_read_dance.whatIsThisColorSignal.connect(marty_calibration.whatIsThisColor)
 
+    marty_read_dance.addActionToServer.connect(client_server.addAction)
+    marty_read_dance.addExpressionToServer.connect(client_server.addExpression)
+    marty_read_dance.sendStep.connect(client_server.sendStep)
+    marty_read_dance.getStepsNumber.connect(client_server.start)
+    client_server.numberSteps.connect(marty_read_dance.setStepsNumber)
+
 if __name__ == "__main__":
     QQuickStyle.setStyle("FluentWinUI3")
     app = QGuiApplication(sys.argv)
@@ -43,6 +50,10 @@ if __name__ == "__main__":
     marty_interaction = MartyInteraction()
     engine.rootContext().setContextProperty("marty_interaction", marty_interaction)
 
+    client_server = ClientServer(8080)
+    engine.rootContext().setContextProperty("client_server", client_server)
+
+    
     marty_calibration = MartyCalibration()
     engine.rootContext().setContextProperty("marty_calibration", marty_calibration)
 

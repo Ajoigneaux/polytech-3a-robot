@@ -12,10 +12,10 @@ Item {
 
     // Navigation clavier
     focus: true
-    Keys.onUpPressed: marty_interaction.moveUp(1)
-    Keys.onLeftPressed: marty_interaction.moveLeft(1)
-    Keys.onRightPressed: marty_interaction.moveRight(1)
-    Keys.onDownPressed: marty_interaction.moveDown(1)
+    Keys.onUpPressed: marty_interaction.moveUp(1, 0)
+    Keys.onLeftPressed: marty_interaction.moveLeft(1, 0)
+    Keys.onRightPressed: marty_interaction.moveRight(1, 0)
+    Keys.onDownPressed: marty_interaction.moveDown(1, 0)
 
     ColumnLayout {
         anchors.fill: parent
@@ -31,7 +31,10 @@ Item {
                 text: "✕"
                 Layout.preferredWidth: 40
                 font.pixelSize: 18
-                onClicked: marty_manager.disconnect()//AJOUTER DECONNEXION ARBITRE
+                onClicked: {
+                    client_server.bye()
+                    marty_manager.disconnect()
+                }
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("Déconnexion")
             }
@@ -89,13 +92,13 @@ Item {
                     GridLayout {
                         columns: 3
                         Rectangle { width: 40; height: 40; color: "transparent" }
-                        Button { text: "↑"; onClicked: marty_interaction.moveUp(1); highlighted: true }
+                        Button { text: "↑"; onClicked: marty_interaction.moveUp(1, 0); highlighted: true }
                         Rectangle { width: 40; height: 40; color: "transparent" }
-                        Button { text: "←"; onClicked: marty_interaction.moveLeft(1); highlighted: true }
+                        Button { text: "←"; onClicked: marty_interaction.moveLeft(1, 0); highlighted: true }
                         Rectangle { width: 40; height: 40; color: "transparent" }
-                        Button { text: "→"; onClicked: marty_interaction.moveRight(1); highlighted: true }
+                        Button { text: "→"; onClicked: marty_interaction.moveRight(1, 0); highlighted: true }
                         Rectangle { width: 40; height: 40; color: "transparent" }
-                        Button { text: "↓"; onClicked: marty_interaction.moveDown(1); highlighted: true }
+                        Button { text: "↓"; onClicked: marty_interaction.moveDown(1, 0); highlighted: true }
                         Rectangle { width: 40; height: 40; color: "transparent" }
                     }
                 }
@@ -199,7 +202,7 @@ Item {
                         highlighted: true
                         enabled: is_file_selected
                         Layout.alignment: Qt.AlignRight
-                        onClicked: marty_read_dance.startSequency(10)//NOMBRE DE PAS DEFINI PAR LE SERVEUR
+                        onClicked: marty_read_dance.startSequency()
                     }
                 }
             }

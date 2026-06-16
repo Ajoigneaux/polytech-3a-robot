@@ -44,7 +44,7 @@ class ServerManager(QObject):
         if localhost :
             self.host = "127.0.0.1"
         else :
-            ""
+            self.host = ""
         
 
     @Slot()
@@ -176,7 +176,7 @@ class ServerManager(QObject):
                     rid = str(uuid.uuid4())[:6].upper()
                     manager.robots[rid] = Robot(rid)
                     manager.robotConnected.emit(rid)
-                    manager.logMessage.emit(f"[HELLO] Nouveau robot enrigistré: {rid}")
+                    manager.logMessage.emit(f"[HELLO] Nouveau robot enregistré: {rid}")
                     self.send_json({"rid" : rid})
 
                 elif path == "/start":
