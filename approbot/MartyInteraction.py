@@ -55,7 +55,6 @@ class MartyInteraction(QObject):
 
     @Slot()
     def stand(self):
-        print("STAND")
         self.robot.get_ready()
 
     @Slot()
