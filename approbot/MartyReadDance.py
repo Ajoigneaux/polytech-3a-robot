@@ -64,7 +64,7 @@ class MartyReadDance(QObject):
             splited_act=act.split(' ')
             self.instruction_act[splited_act[0]]=splited_act[1:]
 
-    @Slot(int)
+    @Slot()
     def startSequency(self):
         #Reset expressions
         self.eyesExpressionRequested.emit("normal")
@@ -75,6 +75,7 @@ class MartyReadDance(QObject):
         self.getStepsNumber.emit()
         #Delay ?
         for i in range(self.steps_number):
+            print(f"Step : {i}")
             #Get movements
             steps, mov=self.instruction_seq[i%seq_len]
             #Execute movement

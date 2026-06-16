@@ -31,9 +31,9 @@ class MartyManager(QObject):
             self.robotUpdated.emit(self.robot)
             #Battery update and start timer
             self.timer_battery.start()
-            print("startt timer battery")
+            # print("startt timer battery")
             self.updateBattery()
-            print("1 battery updated")
+            # print("1 battery updated")
         except:
             print("Failed to connect to Marty at : " + ip_address)
             self.connectionToMartySuccess.emit(False)
@@ -52,7 +52,7 @@ class MartyManager(QObject):
     @Slot(result=int)
     def updateBattery(self):
         try:
-            print("try get battery")
+            # print("try get battery")
             new_level = int(self.robot.get_battery_remaining())
             if(new_level!=self.battery):
                 print(new_level)
