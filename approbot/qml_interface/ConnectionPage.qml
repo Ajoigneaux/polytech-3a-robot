@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+
 Item {
     id: connection_page
     width: parent.width
@@ -71,6 +72,12 @@ Item {
             onClicked: {
                 textError.text = "" // Réinitialise le texte d'erreur
 
+                // Connexion à l'arbitre si le champ n'est pas vide
+                if (refereeIpAddress.text !== "") {
+                    client_server.checkServer(refereeIpAddress.text)
+                }
+
+                
                 // Connexion au robot prioritaire
                 if (martyIpAddress.text !== "") {
                     startWindow.expecting_referee = (refereeIpAddress.text !== "")// On dit a Main.qml qu'aucun arbitre n'est attendu
@@ -80,10 +87,7 @@ Item {
                     return;//Quitte la fonction si pas d'IP
                 }
 
-                // Connexion à l'arbitre si le champ n'est pas vide
-                if (refereeIpAddress.text !== "") {
-                    // APPEL DE LA CONNEXION A l'ARBITRE
-                }
+                
             }
         }
 
