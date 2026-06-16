@@ -82,7 +82,7 @@ Item {
                         text: qsTr("LIRE LE CAPTEUR")
                         Layout.fillWidth: true
                         Layout.preferredHeight: 50
-                        onClicked: marty_calibration.whatIsThisColor()
+                        onClicked: marty_calibration.readColor()
                     }
                 }
                 
@@ -93,6 +93,15 @@ Item {
                     font.italic: true
                     color: palette.placeholderText
                     Layout.alignment: Qt.AlignHCenter
+                }
+
+                Connections
+                {
+                    target: marty_calibration
+                    function onCurrentColorDetectedTextSignal(color_read) {
+                        feedbackLabel.text = color_read
+                        // feedbackLabel.text = qsTr(`${color_read}`)
+                    }
                 }
             }
         }
