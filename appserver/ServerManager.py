@@ -14,7 +14,7 @@ class ServerManager(QObject):
     #signaux envoyés à l'interface QML
     robotConnected = Signal(str)
     robotDisconnected = Signal(str)
-    stepReceived = Signal(str,str,str,str,int) # rid, col, arm, exp, points
+    stepReceived = Signal(str,str,str,str,int,int) # rid, col, arm, exp, points, nb_steps
     logMessage = Signal(str)
 
     def __init__(self, port):
@@ -202,8 +202,9 @@ class ServerManager(QObject):
         
                     pts = manager.battle.calcul_step_score(col, arm, exp)
                     manager.robots[rid].add_step(col, arm, exp, pts)
+                    nb_steps = len(manager.robots[rid].steps)
                     manager.logMessage.emit(f"[STEP] {rid} | col={col} arm={arm} exp={exp} -> +{pts} pts")
-                    manager.stepReceived.emit(rid, col, arm, exp, pts)
+                    manager.stepReceived.emit(rid, col, arm, exp, pts, nb_steps)
                     self.send_json({"points": pts})
 
                 elif path == "/bye":

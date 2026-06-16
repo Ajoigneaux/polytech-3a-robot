@@ -26,7 +26,7 @@ ApplicationWindow
         }
         function onRobotConnected(rid)
         {
-            robotModel.append({"rid": rid, "score": 0})
+            robotModel.append({"rid": rid, "score": 0, "steps": 0})
         }
         function onRobotDisconnected(rid)
         {
@@ -39,13 +39,14 @@ ApplicationWindow
                 }
             }
         }
-        function onStepReceived(rid, col, arm, exp, points)
+        function onStepReceived(rid, col, arm, exp, points, nb_steps)
         {
             for(var i = 0; i < robotModel.count; i++)
             {
                 if(robotModel.get(i).rid === rid)
                 {
                     robotModel.setProperty(i, "score", robotModel.get(i).score + points)
+                    robotModel.setProperty(i, "steps", nb_steps)
                     break
                 }
             }
@@ -196,7 +197,9 @@ ApplicationWindow
                         spacing: 0
 
                         Label { text: "RID";    font.bold: true; Layout.preferredWidth: 80 }
+                        Label { text: "Steps";  font.bold: true; Layout.preferredWidth: 60 }
                         Label { text: "Points"; font.bold: true; Layout.fillWidth: true }
+                        
                     }
 
                     Rectangle
@@ -219,7 +222,8 @@ ApplicationWindow
                         {
                             width: robotView.width
                             spacing: 0
-                            Label { text: model.rid; Layout.preferredWidth: 80 }
+                            Label { text: model.rid;   Layout.preferredWidth: 80 }
+                            Label { text: model.steps; Layout.preferredWidth: 60}
                             Label { text: model.score; Layout.fillWidth: true }
                         }
                     }
