@@ -55,6 +55,8 @@ class ClientServer(QObject):
     
     @Slot()
     def bye(self):
+        if self.rid is None:
+            return
         requests.post(f"{self.url}/bye", json={"rid": self.rid})
         self.rid = None
         print(f"[CLIENT] Déconnecté du serveur")
